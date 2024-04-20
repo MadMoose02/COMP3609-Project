@@ -1,7 +1,6 @@
 package Managers;
 /**
  * FontManager.java
- * @author Keshan Moosai - 816031326
  */
 
 import java.awt.Font;
@@ -11,18 +10,17 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * Custom Font management class that loads fonts from the assets folder. This game uses a custom font
- * called "Centauri" retreived from https://freedafonts.com/centauri-font/
+ * Custom Font management class that loads fonts from the assets folder.
  */
 public class FontManager {
     
     private static FontManager instance;
     private static HashMap<String, Font> fonts;
-    private static final String FONTS_FOLDER    = System.getProperty("user.dir") + File.separator + 
+    private static final String FONTS_FOLDER = System.getProperty("user.dir") + File.separator + 
                                                   "assets" + File.separator + "fonts";
 
     public FontManager() {
-        System.out.println("[SOUND MANAGER] Initialising");
+        System.out.println("[FONT MANAGER] Initialising");
         FontManager.fonts = new HashMap<>();
     }
 
