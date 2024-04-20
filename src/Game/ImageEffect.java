@@ -1,3 +1,4 @@
+package Game;
 import java.util.Random;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -13,7 +14,6 @@ public class ImageEffect {
 
 	private static final int XSIZE = 100;   // width of the image
 	private static final int YSIZE = 100;   // height of the image
-	private static final int XSTEP = 7;		// amount of pixels to move in one keystroke
 	private static final int YPOS = 150;    // vertical position of the image
 
 	private Dimension dimension;

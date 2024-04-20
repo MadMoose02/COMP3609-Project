@@ -1,6 +1,9 @@
+package Game;
 import java.awt.Image;
 import java.awt.Graphics2D;
 
+import Managers.ImageManager;
+import Managers.SoundManager;
 
 /**
     The BirdAnimation class creates an animation of a flying bird. 

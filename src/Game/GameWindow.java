@@ -1,3 +1,4 @@
+package Game;
 /**
  * GameWindow.java
  * Extended from Game Programming lab content
@@ -113,13 +114,11 @@ public class GameWindow extends JFrame
 
 		
 		// create buttonPanel
-
 		JPanel buttonPanel = new JPanel();
 		gridLayout = new GridLayout(2, 3);
 		buttonPanel.setLayout(gridLayout);
 
 		// add buttons to buttonPanel
-
 		buttonPanel.add (startB);
 		buttonPanel.add (pauseB);
 		buttonPanel.add (endB);
@@ -128,46 +127,37 @@ public class GameWindow extends JFrame
 		buttonPanel.add (exitB);
 
 		// add sub-panels with GUI objects to mainPanel and set its colour
-
 		mainPanel.add(infoPanel);
 		mainPanel.add(gamePanel);
 		mainPanel.add(buttonPanel);
 		mainPanel.setBackground(Color.PINK);
 
 		// set up mainPanel to respond to keyboard and mouse
-
 		gamePanel.addMouseListener(this);
 		mainPanel.addKeyListener(this);
 
 		// add mainPanel to window surface
-
 		c = getContentPane();
 		c.add(mainPanel);
 
 		// set properties of window
-
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		setVisible(true);
 
 		// set status bar message
-
 		statusBarTF.setText("Application started.");
 	}
 
 
-	// implement single method in ActionListener interface
+	
+    /** ActionListener method */
 
 	public void actionPerformed(ActionEvent e) {
-
 		String command = e.getActionCommand();
-		
 		statusBarTF.setText(command + " button clicked.");
 
-		if (command.equals(startB.getText())) {
-			gamePanel.startGame();
-		}
+		if (command.equals(startB.getText())) { gamePanel.startNewGame(); }
 
 		if (command.equals(pauseB.getText())) {
 			gamePanel.pauseGame();
@@ -178,78 +168,60 @@ public class GameWindow extends JFrame
 
 		}
 		
-		if (command.equals(endB.getText())) {
-			gamePanel.endGame();
-		}
-
-		if (command.equals(startNewB.getText()))
-			gamePanel.startNewGame();
-
-		if (command.equals(focusB.getText()))
-			gamePanel.showAnimation();
-
-		if (command.equals(exitB.getText()))
-			System.exit(0);
+		if (command.equals(endB.getText())) { gamePanel.endGame(); }
+		if (command.equals(startNewB.getText())) { gamePanel.startNewGame(); }
+		if (command.equals(focusB.getText())) { gamePanel.showAnimation(); }
+		if (command.equals(exitB.getText())) { System.exit(0); }
 
 		mainPanel.requestFocus();
 	}
 
 
-	// implement methods in KeyListener interface
+	/** KeyListener methods */
 
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		String keyText = e.getKeyText(keyCode);
+		String keyText = KeyEvent.getKeyText(keyCode);
 		keyTF.setText(keyText + " pressed.");
 
-		if (keyCode == KeyEvent.VK_LEFT) {
-			gamePanel.moveLeft();
-		}
-		else
-		if (keyCode == KeyEvent.VK_RIGHT) {
-			gamePanel.moveRight();
-		}
-		else
-		if (keyCode == KeyEvent.VK_SPACE) {
-			gamePanel.jump();
-		}
+		switch (keyCode) {
+
+            case KeyEvent.VK_UP:
+                gamePanel.jump();
+                break;
+
+            case KeyEvent.VK_SPACE:
+                gamePanel.jump();
+                break;
+            
+            case KeyEvent.VK_LEFT:
+                gamePanel.moveLeft();
+                break;
+            
+            case KeyEvent.VK_RIGHT:
+                gamePanel.moveRight();
+                break;
+
+            default:
+                break;
+        }
 	}
 
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e) {}
 
-	}
-
-	public void keyTyped(KeyEvent e) {
-
-	}
+	public void keyTyped(KeyEvent e) {}
 
 
-	// implement methods in MouseListener interface
+    /** MouseListener methods */
 
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {}
 
-		int x = e.getX();
-		int y = e.getY();
+	public void mouseEntered(MouseEvent e) {}
 
-		mouseTF.setText("(" + x +", " + y + ")");
+	public void mouseExited(MouseEvent e) {}
 
-	}
+	public void mousePressed(MouseEvent e) {}
 
-
-	public void mouseEntered(MouseEvent e) {
-	
-	}
-
-	public void mouseExited(MouseEvent e) {
-	
-	}
-
-	public void mousePressed(MouseEvent e) {
-	
-	}
-
-	public void mouseReleased(MouseEvent e) {
-	
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 }

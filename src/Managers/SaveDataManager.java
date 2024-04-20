@@ -1,3 +1,4 @@
+package Managers;
 /**
  * SaveDataManager.java
  */
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import Game.DataKey;
+
 public class SaveDataManager {
     
     private static SaveDataManager instance     = null;
@@ -20,6 +23,21 @@ public class SaveDataManager {
         SaveDataManager.data = new HashMap<DataKey, Float>();
     }
 
+    
+    /* Accessors */
+
+    public static Float get(DataKey key) { 
+        if (!SaveDataManager.data.containsKey(key)) { System.out.println("[SAVEDATA MANAGER] No such key: " + key); }
+        return SaveDataManager.data.get(key); 
+    }
+
+
+    /* Mutators */
+    public static void set(DataKey key, Float value) { SaveDataManager.data.put(key, value); }
+
+
+    /* Methods */
+
     public static SaveDataManager getInstance() {
         if (instance == null) {
             SaveDataManager.instance = new SaveDataManager();
@@ -27,14 +45,7 @@ public class SaveDataManager {
         }
         return SaveDataManager.instance;
     }
-
-    public static Float get(DataKey key) { 
-        if (!SaveDataManager.data.containsKey(key)) { System.out.println("[SAVEDATA MANAGER] No such key: " + key); }
-        return SaveDataManager.data.get(key); 
-    }
-
-    public static void set(DataKey key, Float value) { SaveDataManager.data.put(key, value); }
-
+    
     public static void writeSaveData() {
         try {
             File saveFile = new File("save.dat");

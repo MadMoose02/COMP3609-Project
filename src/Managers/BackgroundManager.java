@@ -1,3 +1,4 @@
+package Managers;
 /* BackgroundManager manages many backgrounds (wraparound images 
    used for the game's background). 
 
@@ -13,23 +14,25 @@
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
+import Game.Background;
+
 
 public class BackgroundManager {
 
 	private String bgImages[] = {
-        "layer_08.png",
-        "layer_07.png",
-        "layer_06.png",
-        "layer_05.png",
-        "layer_04.png",
-        "layer_03.png",
-        "layer_02.png",
-        "layer_01.png"
+        "layer_08",
+        "layer_07",
+        "layer_06",
+        "layer_05",
+        "layer_04",
+        "layer_03",
+        "layer_02",
+        "layer_01"
     };
 
-  	private int moveAmount[] = {1, 2, 3, 4, 4, 4, 5, 10};  
-						// pixel amounts to move each background left or right
-     						// a move amount of 0 makes a background stationary
+    // pixel amounts to move each background left or right
+    // a move amount of 0 makes a background stationary
+  	private int moveAmount[] = {1, 2, 3, 4, 4, 4, 5, 10};
 
   	private Background[] backgrounds;
   	private int numBackgrounds;
@@ -38,26 +41,24 @@ public class BackgroundManager {
         numBackgrounds = bgImages.length;
         backgrounds = new Background[numBackgrounds];
         for (int i = 0; i < numBackgrounds; i++) {
-            backgrounds[i] = new Background(panel, bgImages[i], moveAmount[i]);
+            backgrounds[i] = new Background(panel, "layers_" + bgImages[i], moveAmount[i]);
         }
+        System.out.println ("[BACKGROUND MANAGER] Loaded " + numBackgrounds + " backgrounds");
   	} 
 
   	public void moveRight() { 
-		for (int i=0; i < numBackgrounds; i++)
-      			backgrounds[i].moveRight();
+		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].moveRight(); }
   	}
 
   	public void moveLeft() {
-		for (int i=0; i < numBackgrounds; i++)
-      			backgrounds[i].moveLeft();
+		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].moveLeft(); }
   	}
 
   	// The draw method draws the backgrounds on the screen. The
   	// backgrounds are drawn from the back to the front.
 
   	public void draw (Graphics2D g2) { 
-		for (int i=0; i < numBackgrounds; i++)
-            backgrounds[i].draw(g2);
+		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].draw(g2); }
   	}
 
 }
