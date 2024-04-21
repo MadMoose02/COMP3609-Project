@@ -1,0 +1,717 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "ForestFrenzy.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "C:/Users/User/Desktop/WinterWasteland/Ground.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/SOS.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/Winter-Wasteland.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1031.8181818181818,
+                "y": 730.3030303030303
+            }
+        },
+        "C:/Users/User/Desktop/WinterWasteland/bush-1.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/bush-2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/bush-3.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/bush-4.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/caneGreenSmall.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/caneRedSmall.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/cloud_key.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/coin.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/deadTree.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/diamond_key.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceBlock.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceBlockAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceBlockHalf.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceBlockHalfAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWater.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterDeep.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterDeepAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterDeepStars.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterDeepStarsAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterMid.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iceWaterMidAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/igloo.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iglooAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iglooDoor.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iglooRoof.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iglooRoofLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/iglooRoofRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/keys-01.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/keys-02.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/keys-03.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/keys-04.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/keys-05.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/keys-06.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/ladder-white.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/ladder.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/log_cabin.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/pineSapling.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/pineSaplingAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/plant.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/plantAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/rock-1.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/rock-2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/rock-3.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/rock.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/rockAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikeTop.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikesBottom.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikesBottomAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikesBottomAlt2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikesTop.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikesTopAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/spikesTopAlt2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tree.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesLeftAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesLeftSnowAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesSnowLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesSnowRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesSnowRightAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeBranchesSnowRightSnowAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTop.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTopSnow.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunk.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBottom.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBottomAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBottomAlt2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBottomAlt3.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBranch.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBranchEndLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBranchEndRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBranchLeftAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkBranchRightAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkSplitLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkSplitRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/treeTrunkTop.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundra.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraCenter.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraCenter_rounded.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraCliffLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraCliffLeftAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraCliffRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraCliffRightAlt.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHalf.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHalfLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHalfMid.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHalfRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHillLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHillLeft2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHillRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraHillRight2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraLedgeLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraLedgeRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraLeft.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraMid.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/tundraRight.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/water_1.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/water_2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/water_3.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/water_4.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/water_5.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/water_6.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/winning_door.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/wood_door_01.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/WinterWasteland/wood_door_01_n.tsx": {
+            "scaleInDock": 1
+        },
+        "Cabin.tsx": {
+            "scaleInDock": 1
+        },
+        "EggCluster.tsx": {
+            "scaleInDock": 1
+        },
+        "EggPopped.tsx": {
+            "scaleInDock": 1
+        },
+        "ForestFrenzy.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 269,
+                "y": 231
+            }
+        },
+        "SOS.tsx": {
+            "scaleInDock": 1
+        },
+        "Scorpio.tsx": {
+            "scaleInDock": 1
+        },
+        "Snake.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_01.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_02.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_03.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_04.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_05.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_06.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_07.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_08.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_09.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_10.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_11.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_12.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_13.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_14.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_15.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_16.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_17.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_18.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_19.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_20.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_21.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_22.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_23.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_24.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_25.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_26.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_27.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_28.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_29.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_30.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_31.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_32.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_33.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_34.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_35.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_36.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_37.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_38.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_39.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_40.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_41.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_44.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_45.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_46.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_47.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_48.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_49.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_50.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_51.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_52.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_53.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_54.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_55.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_56.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_57.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_58.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_59.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_60.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_61.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_62.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_63.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_64.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_65.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_66.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_67.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_68.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_69.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_70.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_71.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_72.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_73.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_74.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_75.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_76.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_77.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_78.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_79.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_80.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_81.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_82.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_83.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_84.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_85.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_86.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_87.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_88.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_89.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_90.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_91.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_92.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_93.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_94.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_95.tsx": {
+            "scaleInDock": 1
+        },
+        "Tile_96.tsx": {
+            "scaleInDock": 1
+        },
+        "Vulture.tsx": {
+            "scaleInDock": 1
+        },
+        "bush-1.tsx": {
+            "scaleInDock": 1
+        },
+        "bush-2.tsx": {
+            "scaleInDock": 1
+        },
+        "bush-3.tsx": {
+            "scaleInDock": 1
+        },
+        "bush-4.tsx": {
+            "scaleInDock": 1
+        },
+        "cabin.tsx": {
+            "scaleInDock": 1
+        },
+        "coin.tsx": {
+            "scaleInDock": 1
+        },
+        "forest-ladder.tsx": {
+            "scaleInDock": 1
+        },
+        "fountain.tsx": {
+            "scaleInDock": 1
+        },
+        "key.tsx": {
+            "scaleInDock": 1
+        },
+        "keys-04.tsx": {
+            "scaleInDock": 1
+        },
+        "rock-1.tsx": {
+            "scaleInDock": 1
+        },
+        "rock-2.tsx": {
+            "scaleInDock": 1
+        },
+        "rock-3.tsx": {
+            "scaleInDock": 1
+        },
+        "tree.tsx": {
+            "scaleInDock": 1
+        },
+        "water_1.tsx": {
+            "scaleInDock": 1
+        },
+        "water_2.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "last.externalTilesetPath": "C:/Users/User/Desktop/ForestFrenzy",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "ForestFrenzy.tmx"
+    ],
+    "project": "ForestFrenzy.tiled-project",
+    "recentFiles": [
+        "ForestFrenzy.tmx",
+        "C:/Users/User/Desktop/WinterWasteland/Winter-Wasteland.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 48,
+        "width": 48
+    }
+}

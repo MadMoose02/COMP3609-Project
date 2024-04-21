@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="Tile_03.tsx"/>
+ <tileset firstgid="2" source="Tile_04.tsx"/>
+ <tileset firstgid="3" source="Tile_05.tsx"/>
+ <tileset firstgid="4" source="Tile_06.tsx"/>
+ <tileset firstgid="5" source="Tile_07.tsx"/>
+ <tileset firstgid="6" source="Tile_08.tsx"/>
+ <tileset firstgid="7" source="Tile_09.tsx"/>
+ <tileset firstgid="8" source="Tile_10.tsx"/>
+ <tileset firstgid="9" source="Tile_11.tsx"/>
+ <tileset firstgid="10" source="Tile_12.tsx"/>
+ <tileset firstgid="11" source="Tile_13.tsx"/>
+ <tileset firstgid="12" source="Tile_14.tsx"/>
+ <tileset firstgid="13" source="Tile_15.tsx"/>
+ <tileset firstgid="14" source="Tile_16.tsx"/>
+ <tileset firstgid="15" source="Tile_17.tsx"/>
+ <tileset firstgid="16" source="Tile_18.tsx"/>
+ <tileset firstgid="17" source="Tile_19.tsx"/>
+ <tileset firstgid="18" source="Tile_20.tsx"/>
+ <tileset firstgid="19" source="Tile_21.tsx"/>
+ <tileset firstgid="20" source="Tile_22.tsx"/>
+ <tileset firstgid="21" source="Tile_23.tsx"/>
+ <tileset firstgid="22" source="Tile_24.tsx"/>
+ <tileset firstgid="23" source="Tile_25.tsx"/>
+ <tileset firstgid="24" source="Tile_26.tsx"/>
+ <tileset firstgid="25" source="Tile_27.tsx"/>
+ <tileset firstgid="26" source="Tile_28.tsx"/>
+ <tileset firstgid="27" source="Tile_29.tsx"/>
+ <tileset firstgid="28" source="Tile_30.tsx"/>
+ <tileset firstgid="29" source="Tile_31.tsx"/>
+ <tileset firstgid="30" source="Tile_32.tsx"/>
+ <tileset firstgid="31" source="Tile_33.tsx"/>
+ <tileset firstgid="32" source="Tile_34.tsx"/>
+ <tileset firstgid="33" source="Tile_35.tsx"/>
+ <tileset firstgid="34" source="Tile_36.tsx"/>
+ <tileset firstgid="35" source="Tile_37.tsx"/>
+ <tileset firstgid="36" source="Tile_38.tsx"/>
+ <tileset firstgid="37" source="Tile_39.tsx"/>
+ <tileset firstgid="38" source="Tile_40.tsx"/>
+ <tileset firstgid="39" source="Tile_41.tsx"/>
+ <tileset firstgid="40" source="Tile_44.tsx"/>
+ <tileset firstgid="41" source="Tile_45.tsx"/>
+ <tileset firstgid="42" source="Tile_46.tsx"/>
+ <tileset firstgid="43" source="Tile_47.tsx"/>
+ <tileset firstgid="44" source="Tile_48.tsx"/>
+ <tileset firstgid="45" source="Tile_49.tsx"/>
+ <tileset firstgid="46" source="Tile_50.tsx"/>
+ <tileset firstgid="47" source="Tile_51.tsx"/>
+ <tileset firstgid="48" source="Tile_52.tsx"/>
+ <tileset firstgid="49" source="Tile_53.tsx"/>
+ <tileset firstgid="50" source="Tile_54.tsx"/>
+ <tileset firstgid="51" source="Tile_55.tsx"/>
+ <tileset firstgid="52" source="Tile_56.tsx"/>
+ <tileset firstgid="53" source="Tile_57.tsx"/>
+ <tileset firstgid="54" source="Tile_58.tsx"/>
+ <tileset firstgid="55" source="Tile_59.tsx"/>
+ <tileset firstgid="56" source="Tile_60.tsx"/>
+ <tileset firstgid="57" source="Tile_61.tsx"/>
+ <tileset firstgid="58" source="Tile_62.tsx"/>
+ <tileset firstgid="59" source="Tile_63.tsx"/>
+ <tileset firstgid="60" source="Tile_64.tsx"/>
+ <tileset firstgid="61" source="Tile_65.tsx"/>
+ <tileset firstgid="62" source="Tile_66.tsx"/>
+ <tileset firstgid="63" source="Tile_67.tsx"/>
+ <tileset firstgid="64" source="Tile_68.tsx"/>
+ <tileset firstgid="65" source="Tile_69.tsx"/>
+ <tileset firstgid="66" source="Tile_70.tsx"/>
+ <tileset firstgid="67" source="Tile_71.tsx"/>
+ <tileset firstgid="68" source="Tile_72.tsx"/>
+ <tileset firstgid="69" source="Tile_73.tsx"/>
+ <tileset firstgid="70" source="Tile_74.tsx"/>
+ <tileset firstgid="71" source="Tile_75.tsx"/>
+ <tileset firstgid="72" source="Tile_76.tsx"/>
+ <tileset firstgid="73" source="Tile_77.tsx"/>
+ <tileset firstgid="74" source="Tile_78.tsx"/>
+ <tileset firstgid="75" source="Tile_79.tsx"/>
+ <tileset firstgid="76" source="Tile_80.tsx"/>
+ <tileset firstgid="77" source="Tile_81.tsx"/>
+ <tileset firstgid="78" source="Tile_82.tsx"/>
+ <tileset firstgid="79" source="Tile_83.tsx"/>
+ <tileset firstgid="80" source="Tile_84.tsx"/>
+ <tileset firstgid="81" source="Tile_85.tsx"/>
+ <tileset firstgid="82" source="Tile_86.tsx"/>
+ <tileset firstgid="83" source="Tile_87.tsx"/>
+ <tileset firstgid="84" source="Tile_88.tsx"/>
+ <tileset firstgid="85" source="Tile_89.tsx"/>
+ <tileset firstgid="86" source="Tile_90.tsx"/>
+ <tileset firstgid="87" source="Tile_91.tsx"/>
+ <tileset firstgid="88" source="Tile_92.tsx"/>
+ <tileset firstgid="89" source="Tile_93.tsx"/>
+ <tileset firstgid="90" source="Tile_94.tsx"/>
+ <tileset firstgid="91" source="Tile_95.tsx"/>
+ <tileset firstgid="92" source="Tile_96.tsx"/>
+ <tileset firstgid="93" source="Tile_01.tsx"/>
+ <tileset firstgid="94" source="Tile_02.tsx"/>
+ <tileset firstgid="95" source="water_1.tsx"/>
+ <tileset firstgid="96" source="water_2.tsx"/>
+ <tileset firstgid="97" source="../WinterWasteland/water_3.tsx"/>
+ <tileset firstgid="98" source="../WinterWasteland/water_5.tsx"/>
+ <tileset firstgid="99" source="../WinterWasteland/water_4.tsx"/>
+ <tileset firstgid="100" source="../WinterWasteland/water_6.tsx"/>
+ <tileset firstgid="101" source="tree.tsx"/>
+ <tileset firstgid="121" source="fountain.tsx"/>
+ <tileset firstgid="125" source="bush-4.tsx"/>
+ <tileset firstgid="126" source="bush-3.tsx"/>
+ <tileset firstgid="127" source="bush-2.tsx"/>
+ <tileset firstgid="128" source="bush-1.tsx"/>
+ <tileset firstgid="129" source="rock-3.tsx"/>
+ <tileset firstgid="130" source="rock-2.tsx"/>
+ <tileset firstgid="131" source="rock-1.tsx"/>
+ <tileset firstgid="132" source="forest-ladder.tsx"/>
+ <tileset firstgid="133" source="../WinterWasteland/log_cabin.tsx"/>
+ <tileset firstgid="133" source="Cabin.tsx"/>
+ <tileset firstgid="134" source="SOS.tsx"/>
+ <tileset firstgid="138" source="keys-04.tsx"/>
+ <tileset firstgid="140" source="keys-04.tsx"/>
+ <tileset firstgid="141" source="key.tsx"/>
+ <tileset firstgid="142" source="coin.tsx"/>
+ <tileset firstgid="143" source="coin.tsx"/>
+ <tileset firstgid="144" source="EggPopped.tsx"/>
+ <tileset firstgid="145" source="EggCluster.tsx"/>
+ <tileset firstgid="146" source="Scorpio.tsx"/>
+ <tileset firstgid="147" source="Vulture.tsx"/>
+ <tileset firstgid="148" source="Snake.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="30" height="20">
+  <data encoding="csv">
+0,121,122,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,123,124,0,0,0,0,0,0,0,0,0,40,41,31,94,94,94,32,41,42,0,0,0,0,0,0,102,103,104,
+45,94,94,94,47,0,0,0,0,0,43,0,0,0,52,2,38,2,54,0,0,0,0,0,0,0,105,106,107,108,
+0,52,38,54,0,0,0,0,43,0,0,0,0,0,0,52,2,54,0,0,0,0,0,0,0,0,109,110,111,112,
+0,0,55,0,0,0,43,0,0,0,0,0,0,0,0,0,55,0,0,0,0,0,0,0,0,0,113,114,115,116,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,127,0,0,0,0,0,0,0,0,0,0,0,0,118,119,120,
+19,20,20,20,20,20,20,20,21,0,0,0,0,45,46,46,46,46,46,47,0,0,0,40,8,31,94,32,8,42,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,2,13,2,26,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,57,2,54,0,0,
+0,0,0,0,0,0,0,40,8,31,94,94,94,32,8,8,31,94,94,32,8,42,0,0,0,57,58,0,0,0,
+0,0,127,0,0,0,43,0,23,2,13,13,13,2,2,38,2,13,13,2,26,0,0,0,0,52,54,0,0,0,
+0,0,45,46,46,47,0,0,0,52,53,53,53,53,53,53,53,53,53,54,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+32,31,94,94,32,8,8,8,8,31,94,94,94,94,94,94,1,0,0,0,43,0,0,0,7,8,42,0,0,0,
+2,2,13,13,2,2,2,2,2,2,62,62,62,35,35,35,62,0,43,0,0,0,43,0,57,58,0,40,42,0,
+38,2,2,2,2,2,38,2,2,2,2,2,62,35,35,62,58,96,96,96,96,96,96,96,57,58,0,0,0,0,
+2,2,2,2,2,2,2,2,2,2,2,2,2,62,62,62,58,95,95,95,95,95,95,95,57,58,0,0,128,125,
+2,2,2,38,2,2,2,2,2,2,2,2,2,2,13,2,58,95,95,95,95,95,95,95,57,2,31,94,94,32,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,8,8,8,8,8,8,8,2,2,2,2,2,2
+</data>
+ </layer>
+ <layer id="3" name="Tile Layer 2" width="30" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,0,0,143,0,0,0,0,0,0,0,0,0,0,0,0,
+141,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,134,135,0,0,0,0,0,0,
+0,0,0,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,136,137,141,0,0,0,0,0,
+0,0,0,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,0,0,0,0,0,0,
+143,0,0,132,0,0,147,0,131,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,0,0,0,0,144,130,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,144,0,0,132,0,0,0,148,0,0,131,143,0,0,132,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,
+0,0,0,0,145,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,
+0,0,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,0,0,0,
+0,0,132,0,0,0,0,0,0,131,0,0,0,146,0,0,0,0,0,0,143,0,0,0,132,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,143,132,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,129,129,129,129,129,130,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>
