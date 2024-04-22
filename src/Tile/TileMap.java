@@ -196,15 +196,31 @@ public class TileMap {
      * @param g2 The graphics context to draw to
      */
     public void draw(Graphics2D g2) {
-        int mapWidthPixels = tilesToPixels(mapWidth);
-
-        // get the scrolling position of the map based on player's position
         int offsetX = screenWidth / 2 - Math.round(player.getX()) - GamePanel.TILE_SIZE;
-        offsetX = Math.min(offsetX, 0);
-        offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
+        offsetX = Math.max(offsetX, 0);
+        offsetX = Math.min(offsetX, tilesToPixels(mapWidth) - screenWidth);
+    
+        // Calculate the player's x-coordinate relative to the viewable map
+        int playerX = player.getX() - offsetX;
 
+        // Check if the player is within 50 pixels of the left or right edge
+        if (playerX < 50) {
+            // Player is near the left edge, scroll map to the right
+            offsetX = Math.max(player.getX() - 50, 0);
+        } else if (playerX > screenWidth - 50) {
+            // Player is near the right edge, scroll map to the left
+            offsetX = Math.min(player.getX() + 50, tilesToPixels(mapWidth) - screenWidth);
+        }
+
+        // Clamp offsetX to the map bounds
+        if (offsetX < 0) {
+            offsetX = 0;
+        } else if (offsetX > tilesToPixels(mapWidth) - screenWidth) {
+            offsetX = tilesToPixels(mapWidth) - screenWidth;
+        }
+        
 	    // draw the background first
-	    bgManager.draw (g2);
+	    bgManager.draw(g2);
         
         // draw the visible tiles
         int firstTileX = pixelsToTiles(-offsetX);
@@ -224,6 +240,18 @@ public class TileMap {
         heart.draw(g2, 0, 0);
     }
 
+    public void update() {
+        player.update();
+
+        if (heart.collidesWithPlayer()) {
+            panel.endLevel();
+            return;
+        }
+
+        if (heart.collidesWithPlayer()) {
+            panel.endLevel();
+        }
+    }
 
     public void moveLeft() {
         player.move(Movement.LEFT);
@@ -249,19 +277,11 @@ public class TileMap {
         player.move(Movement.JUMP);
     }
 
-
-    public void update() {
-        player.update();
-
-        if (heart.collidesWithPlayer()) {
-            panel.endLevel();
-            return;
-        }
-
-        if (heart.collidesWithPlayer()) {
-            panel.endLevel();
-        }
-
+    public void stand() {
+        player.move(Movement.STAND);
     }
 
+    public void crouch() {
+        player.move(Movement.CROUCH);
+    }
 }

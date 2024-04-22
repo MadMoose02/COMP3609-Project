@@ -26,9 +26,6 @@ public class GameWindow extends JFrame
 	private JButton startB;
 	private JButton pauseB;
 	private JButton endB;
-	private JButton startNewB;
-	private JButton focusB;
-	private JButton exitB;
 
 	private Container c;
 
@@ -67,9 +64,6 @@ public class GameWindow extends JFrame
         startB = new JButton ("Start Game");
         pauseB = new JButton ("Pause Game");
         endB = new JButton ("End Game");
-		startNewB = new JButton ("Start New Game");
-        focusB = new JButton ("Show Animation");
-		exitB = new JButton ("Exit");
 
 
 		// add listener to each button (same as the current object)
@@ -77,10 +71,7 @@ public class GameWindow extends JFrame
 		startB.addActionListener(this);
 		pauseB.addActionListener(this);
 		endB.addActionListener(this);
-		startNewB.addActionListener(this);
-		focusB.addActionListener(this);
-		exitB.addActionListener(this);
-		
+
 		// create mainPanel
 
 		mainPanel = new JPanel();
@@ -122,9 +113,6 @@ public class GameWindow extends JFrame
 		buttonPanel.add (startB);
 		buttonPanel.add (pauseB);
 		buttonPanel.add (endB);
-		buttonPanel.add (startNewB);
-		buttonPanel.add (focusB);
-		buttonPanel.add (exitB);
 
 		// add sub-panels with GUI objects to mainPanel and set its colour
 		mainPanel.add(infoPanel);
@@ -169,9 +157,6 @@ public class GameWindow extends JFrame
 		}
 		
 		if (command.equals(endB.getText())) { gamePanel.endGame(); }
-		if (command.equals(startNewB.getText())) { gamePanel.startNewGame(); }
-		if (command.equals(focusB.getText())) { gamePanel.showAnimation(); }
-		if (command.equals(exitB.getText())) { System.exit(0); }
 
 		mainPanel.requestFocus();
 	}
@@ -183,28 +168,7 @@ public class GameWindow extends JFrame
 		int keyCode = e.getKeyCode();
 		String keyText = KeyEvent.getKeyText(keyCode);
 		keyTF.setText(keyText + " pressed.");
-
-		switch (keyCode) {
-
-            case KeyEvent.VK_UP:
-                gamePanel.jump();
-                break;
-
-            case KeyEvent.VK_SPACE:
-                gamePanel.jump();
-                break;
-            
-            case KeyEvent.VK_LEFT:
-                gamePanel.moveLeft();
-                break;
-            
-            case KeyEvent.VK_RIGHT:
-                gamePanel.moveRight();
-                break;
-
-            default:
-                break;
-        }
+        gamePanel.handleKeyInput(keyCode);
 	}
 
 	public void keyReleased(KeyEvent e) {}
