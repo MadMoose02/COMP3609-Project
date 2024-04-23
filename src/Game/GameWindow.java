@@ -34,8 +34,9 @@ public class GameWindow extends JFrame
 
 	public GameWindow() {
  
-		setTitle ("Tiled Bat and Ball Game: Ordinary Windowed Mode");
+		setTitle ("Mystery Mutt Mayhem");
 		setSize (700, 675);
+        // setLocation(2200, 0);
 
 		// create user interface objects
 
@@ -178,7 +179,9 @@ public class GameWindow extends JFrame
 
     /** MouseListener methods */
 
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+        mouseTF.setText("Location of Mouse Click: " + e.getX() + ", " + e.getY());
+    }
 
 	public void mouseEntered(MouseEvent e) {}
 
