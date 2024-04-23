@@ -1,4 +1,5 @@
 package Managers;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -7,10 +8,12 @@ import Game.GamePanel;
 import Tile.*;
 
 
+
 /**
-    The TileMapeManager class loads and manages tile Images and "host" Sprites used in the game. 
-    Game Sprites are cloned from "host" Sprites.
-*/
+ * TileMapManager.java <hr>
+ * Extended from Game Programming lab content
+ * Manages tile Images and "hosts" the Sprites used in the game.
+ */
 public class TileMapManager {
 
     private ArrayList<Tile> tiles;

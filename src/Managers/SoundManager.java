@@ -1,17 +1,16 @@
 package Managers;
-/**
- * SoundManager.java
- * Extended from Game Programming lab content
- */
 
 import java.io.*;
 import java.util.HashMap;
 import javax.sound.sampled.*;
+import javax.sound.sampled.FloatControl.Type;
 
 import Game.DataKey;
 
-/*
- * The SoundManager class manages the loading and processing of any audio files.
+
+/**
+ * SoundManager.java <hr>
+ * Extended from Game Programming lab content
  */
 public class SoundManager {
 	private static SoundManager instance = null;
@@ -19,40 +18,41 @@ public class SoundManager {
 	private static HashMap<String, Clip> music = null;
     private static HashMap<DataKey, Float> volume = null;
     private static String currentMusic = null;
-    private static final String SOUND_FOLDER = System.getProperty("user.dir") + File.separator + "assets" + File.separator + "sounds";
+    private static final String SOUND_FOLDER = System.getProperty("user.dir") + 
+        File.separator + "assets" + File.separator + "sounds";
 
 	private SoundManager () {
         System.out.println("[SOUND MANAGER] Initialising");
-		SoundManager.sfx = new HashMap<String, Clip>();
-		SoundManager.music = new HashMap<String, Clip>();
-        SoundManager.volume = new HashMap<DataKey, Float>();
-        SoundManager.volume.put(DataKey.MUSIC, SaveDataManager.get(DataKey.MUSIC));
-        SoundManager.volume.put(DataKey.SFX, SaveDataManager.get(DataKey.SFX));
+		sfx = new HashMap<String, Clip>();
+		music = new HashMap<String, Clip>();
+        volume = new HashMap<DataKey, Float>();
+        volume.put(DataKey.MUSIC, SaveDataManager.get(DataKey.MUSIC));
+        volume.put(DataKey.SFX, SaveDataManager.get(DataKey.SFX));
 	}
 
 	
     /* Accessors */
 
     private static Clip getClip(DataKey key, String title) {
-        if (key == DataKey.MUSIC) return SoundManager.music.get(title);
-        if (key == DataKey.SFX)   return SoundManager.sfx.get(title);
+        if (key == DataKey.MUSIC) return music.get(title);
+        if (key == DataKey.SFX)   return sfx.get(title);
         System.out.println("[SOUND MANAGER] No such clip: " + title);
         return null;
     }
 
     public static int getFramePosition(DataKey key, String title) {
-        Clip clip = SoundManager.getClip(key, title);
+        Clip clip = getClip(key, title);
         if (clip != null) return clip.getFramePosition();
         System.out.println("[SOUND MANAGER] No such clip: " + title);
         return 0;
     }
 	
-    public static float getVolume(DataKey key) { return SoundManager.volume.get(key); }
+    public static float getVolume(DataKey key) { return volume.get(key); }
 
 
     /* Mutators */
 
-	public static void setVolume(DataKey key, float volume) { SoundManager.gainControl(key, volume); }
+	public static void setVolume(DataKey key, float volume) { gainControl(key, volume); }
 	
 
     /* Methods */
@@ -60,11 +60,11 @@ public class SoundManager {
     public static synchronized SoundManager getInstance() {
         SaveDataManager.getInstance();
 		if (instance == null) {
-            SoundManager.instance = new SoundManager();
-            try { SoundManager.loadDefaultClips(); }
+            instance = new SoundManager();
+            try { loadDefaultClips(); }
             catch (Exception e) { System.out.println("[ERROR] " + e); }
         }
-		return SoundManager.instance;
+		return instance;
 	}
 
 	private static void loadDefaultClips() throws Exception {
@@ -81,17 +81,17 @@ public class SoundManager {
         
         // Load all audio files into HashMap
         for (String fileName : musicFolder.list()) {
-            SoundManager.loadClip(DataKey.MUSIC, fileName);
-            SoundManager.music.put(
+            loadClip(DataKey.MUSIC, fileName);
+            music.put(
                 fileName.split("\\.")[0].toLowerCase(), 
-                SoundManager.getClip(DataKey.MUSIC, fileName)
+                getClip(DataKey.MUSIC, fileName)
             );
         }
         for (String fileName : sfxFolder.list()) {
-            SoundManager.loadClip(DataKey.SFX, fileName);
-            SoundManager.sfx.put(
+            loadClip(DataKey.SFX, fileName);
+            sfx.put(
                 fileName.split("\\.")[0].toLowerCase(),
-                SoundManager.getClip(DataKey.SFX, fileName)
+                getClip(DataKey.SFX, fileName)
             );
         }
     }
@@ -111,28 +111,28 @@ public class SoundManager {
     }
 
     public static void playMusicClip(String title, boolean loop) {
-        Clip clip = SoundManager.getClip(DataKey.MUSIC, title);
+        Clip clip = getClip(DataKey.MUSIC, title);
         if (clip != null) {
             clip.setFramePosition(0);
             if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
             else      clip.start();
-            SoundManager.setVolume(DataKey.MUSIC, SaveDataManager.get(DataKey.MUSIC));
-            SoundManager.currentMusic = title;
+            setVolume(DataKey.MUSIC, SaveDataManager.get(DataKey.MUSIC));
+            currentMusic = title;
             System.out.println("[SOUND MANAGER] Playing: " + title);
         }
     }
 
     public static void stopMusicClip() {
-        Clip clip = SoundManager.getClip(DataKey.MUSIC, SoundManager.currentMusic);
+        Clip clip = getClip(DataKey.MUSIC, currentMusic);
         if (clip != null) {
             clip.stop();
             System.out.println("[SOUND MANAGER] Stopped: " + currentMusic);
         }
-        SoundManager.currentMusic = null;
+        currentMusic = null;
     }
     
     public static void stopMusicClip(String title) {
-        Clip clip = SoundManager.getClip(DataKey.MUSIC, title);
+        Clip clip = getClip(DataKey.MUSIC, title);
         if (clip != null) {
             clip.stop();
             System.out.println("[SOUND MANAGER] Stopped: " + currentMusic);
@@ -140,30 +140,30 @@ public class SoundManager {
     }
 
     public static void resumeClip(String title, boolean loop, int framePosition) {
-        Clip clip = SoundManager.getClip(DataKey.MUSIC, title);
+        Clip clip = getClip(DataKey.MUSIC, title);
         if (clip != null) {
             clip.setFramePosition(framePosition);
             if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
             else      clip.start();
-            SoundManager.setVolume(DataKey.SFX, SaveDataManager.get(DataKey.SFX));
+            setVolume(DataKey.SFX, SaveDataManager.get(DataKey.SFX));
             System.out.println("[SOUND MANAGER] Resumed: " + title);
         }
         
     }
 
     public static void playSFXClip(String title, boolean loop) {
-        Clip clip = SoundManager.getClip(DataKey.SFX, title);
+        Clip clip = getClip(DataKey.SFX, title);
         if (clip != null) {
             clip.setFramePosition(0);
             if (loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
             else      clip.start();
-            SoundManager.setVolume(DataKey.SFX, SaveDataManager.get(DataKey.SFX));
+            setVolume(DataKey.SFX, SaveDataManager.get(DataKey.SFX));
             System.out.println("[SOUND MANAGER] Playing: " + title);
         }
     }
 
     public static void stopSFXClip(String title) {
-        Clip clip = SoundManager.getClip(DataKey.SFX, title);
+        Clip clip = getClip(DataKey.SFX, title);
         if (clip != null) {
             clip.stop();
             System.out.println("[SOUND MANAGER] Stopped: " + title);
@@ -171,8 +171,8 @@ public class SoundManager {
     }
     
     public static void stopAllClips() {
-        for (String title : SoundManager.music.keySet()) SoundManager.stopMusicClip(title);
-        for (String title : SoundManager.sfx.keySet()) SoundManager.stopSFXClip(title);
+        for (String title : music.keySet()) stopMusicClip(title);
+        for (String title : sfx.keySet()) stopSFXClip(title);
     }
 
     private static void gainControl(DataKey key, float volume) {
@@ -184,22 +184,23 @@ public class SoundManager {
         // Set gain control
         switch (key) {
             case MUSIC:
-                Clip clip = SoundManager.music.get(currentMusic);
+                Clip clip = music.get(currentMusic);
                 if (clip != null) {
-                    FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                    FloatControl gainControl = (FloatControl) clip.getControl(Type.MASTER_GAIN);
                     gainControl.setValue(20f * (float) Math.log10(volume));
                 }
                 break;
 
             case SFX:
-                for (Clip c : SoundManager.sfx.values()) {
-                    FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+                for (Clip c : sfx.values()) {
+                    FloatControl gainControl = (FloatControl) c.getControl(Type.MASTER_GAIN);
                     gainControl.setValue(20f * (float) Math.log10(volume));
                 }
                 break;
         
             default:
-                System.out.println("[SOUND MANAGER] Attempted to set invalid volume key: " + key.toString());
+                System.out.println("[SOUND MANAGER] Attempted to set invalid volume key: " + 
+                    key.toString());
                 break;
         }
         

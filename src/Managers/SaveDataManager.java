@@ -1,7 +1,4 @@
 package Managers;
-/**
- * SaveDataManager.java
- */
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,65 +10,74 @@ import java.util.Scanner;
 
 import Game.DataKey;
 
+
+/**
+ * SaveDataManager.java <hr>
+ * Manages the saving and loading of player related persitent game data.
+ */
 public class SaveDataManager {
     
-    private static SaveDataManager instance     = null;
+    private static SaveDataManager instance = null;
     private static HashMap<DataKey, Float> data = null;
 
     public SaveDataManager() {
-        System.out.println("[SAVEDATA MANAGER] Initialising");
-        SaveDataManager.data = new HashMap<DataKey, Float>();
+        System.out.println("[SAVE MANAGER] Initialising");
+        data = new HashMap<DataKey, Float>();
     }
 
     
     /* Accessors */
 
     public static Float get(DataKey key) { 
-        if (!SaveDataManager.data.containsKey(key)) { System.out.println("[SAVEDATA MANAGER] No such key: " + key); }
-        return SaveDataManager.data.get(key); 
+        if (!data.containsKey(key)) { System.out.println("[SAVE MANAGER] No such key: " + key); }
+        return data.get(key); 
     }
 
 
     /* Mutators */
-    public static void set(DataKey key, Float value) { SaveDataManager.data.put(key, value); }
+    public static void set(DataKey key, Float value) { data.put(key, value); }
 
 
     /* Methods */
 
     public static SaveDataManager getInstance() {
         if (instance == null) {
-            SaveDataManager.instance = new SaveDataManager();
-            SaveDataManager.readSaveData();
+            instance = new SaveDataManager();
+            readSaveData();
         }
-        return SaveDataManager.instance;
+        return instance;
     }
     
     public static void writeSaveData() {
         try {
             File saveFile = new File("save.dat");
-            ArrayList<String> lines = SaveDataManager.readFileIntoList(saveFile);
+            ArrayList<String> lines = readFileIntoList(saveFile);
             
             // Check for missing keys
             HashMap<DataKey, Float> toAdd = new HashMap<>();
             for (DataKey key: DataKey.values()) {
-                if (!SaveDataManager.data.containsKey(key)) { toAdd.put(key, 0f); }
+                if (!data.containsKey(key)) { toAdd.put(key, 0f); }
             }
-            if (!toAdd.isEmpty()) { SaveDataManager.data.putAll(toAdd); }
+            if (!toAdd.isEmpty()) { data.putAll(toAdd); }
 
             // Update the lines
-            for (DataKey dataKey: SaveDataManager.data.keySet()) {
+            for (DataKey dataKey: data.keySet()) {
                 String keyString = dataKey.toString();
-                boolean keyExistsInFile = lines.stream().anyMatch(line -> line.trim().startsWith(keyString));
+                boolean keyExistsInFile = lines.stream().anyMatch(
+                    line -> line.trim().startsWith(keyString)
+                );
                 if (keyExistsInFile) { 
                     int index = 0;
                     for (int i = 0; i < lines.size(); i++) { 
                         if (lines.get(i).trim().startsWith(keyString)) { index = i; break; } 
                     }
-                    lines.set(index, keyString + ": " + SaveDataManager.data.get(dataKey));
-                    System.out.println("[SAVEDATA MANAGER] Updated key: " + keyString + ": " + SaveDataManager.data.get(dataKey));
+                    lines.set(index, keyString + ": " + data.get(dataKey));
+                    System.out.println("[SAVE MANAGER] Updated key: " + 
+                        keyString + ": " + data.get(dataKey));
                 } else { 
-                    lines.add(keyString + ": " + SaveDataManager.data.get(dataKey));
-                    System.out.println("[SAVEDATA MANAGER] Added missing key: " + keyString + ": " + SaveDataManager.data.get(dataKey));
+                    lines.add(keyString + ": " + data.get(dataKey));
+                    System.out.println("[SAVE MANAGER] Added missing key: " + 
+                        keyString + ": " + data.get(dataKey));
                 }
             }
             
@@ -80,11 +86,9 @@ public class SaveDataManager {
                 for (String line : lines) { writer.println(line); }
             }
 
-            System.out.println("[SAVEDATA MANAGER] Game data saved");
+            System.out.println("[SAVE MANAGER] Game data saved");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public static void readSaveData() {
@@ -92,7 +96,7 @@ public class SaveDataManager {
             File saveFile = new File("save.dat");
             if (!saveFile.exists()) {
                 saveFile.createNewFile();
-                SaveDataManager.writeSaveData();
+                writeSaveData();
             }
             ArrayList<String> lines = readFileIntoList(saveFile);
             for (String line : lines) {
@@ -100,12 +104,13 @@ public class SaveDataManager {
                 String value = line.split(":")[1].trim();
                 for (DataKey dataKey: DataKey.values()) {
                     if (key.equals(dataKey.toString())) {
-                        System.out.println("[SAVEDATA MANAGER] Loaded key (" + dataKey.toString() + " : " + value + ")");
-                        SaveDataManager.data.put(dataKey, Float.parseFloat(value));
+                        System.out.println("[SAVE MANAGER] Loaded key (" + 
+                            dataKey.toString() + " : " + value + ")");
+                        data.put(dataKey, Float.parseFloat(value));
                     }
                 }
             }
-            System.out.println("[SAVEDATA MANAGER] Game data loaded");
+            System.out.println("[SAVE MANAGER] Game data loaded");
         } 
         catch (IOException e) { e.printStackTrace(); }
     }

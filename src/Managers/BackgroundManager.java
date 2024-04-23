@@ -1,15 +1,4 @@
 package Managers;
-/* BackgroundManager manages many backgrounds (wraparound images 
-   used for the game's background). 
-
-   Backgrounds 'further back' move slower than ones nearer the
-   foreground of the game, creating a parallax distance effect.
-
-   When a sprite is instructed to move left or right, the sprite
-   doesn't actually move, instead the backgrounds move in the 
-   opposite direction (right or left).
-
-*/
 
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
@@ -17,6 +6,16 @@ import javax.swing.JPanel;
 import Game.Background;
 
 
+/**
+ * BackgroundManager.java <hr>
+ * BackgroundManager manages many backgrounds (wraparound images used for the game's background). 
+ *
+ * Backgrounds 'further back' move slower than ones nearer the foreground of the game, 
+ * creating a parallax distance effect.
+ *
+ * When a sprite is instructed to move left or right, the sprite doesn't actually move, instead the 
+ * backgrounds move in the opposite direction (right or left).
+ */
 public class BackgroundManager {
 
 	private String bgImages[] = {
@@ -54,8 +53,12 @@ public class BackgroundManager {
 		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].moveLeft(); }
   	}
 
-  	// The draw method draws the backgrounds on the screen. The
-  	// backgrounds are drawn from the back to the front.
+  	/**
+     * The draw method draws the backgrounds on the screen. The backgrounds are drawn from the 
+     * back to the front.
+     * 
+     * @param g2 Graphics context to draw on
+     */
 
   	public void draw (Graphics2D g2) { 
 		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].draw(g2); }
