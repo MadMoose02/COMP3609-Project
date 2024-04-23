@@ -1,7 +1,7 @@
 package Managers;
 
-import java.awt.*;
 import java.io.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 import Game.GamePanel;
@@ -16,9 +16,8 @@ import Tile.*;
  */
 public class TileMapManager {
 
-    private ArrayList<Tile> tiles;
     private GamePanel panel;
-    private static final int TILE_SIZE = 64;
+    private ArrayList<Image> tileImages;
     private static final String MAP_FOLDER = System.getProperty("user.dir") + 
         File.separator + "assets" + File.separator + "maps";
 
@@ -66,8 +65,9 @@ public class TileMapManager {
                 
                 // check if the char represents tile A, B, C etc.
                 int tile = ch - 'A';
-                if (tile >= 0 && tile < tiles.size()) {
-                    newMap.setTile(x, y, tiles.get(tile));
+                if (tile >= 0 && tile < tileImages.size()) {
+                    Tile newTile = new Tile(tileImages.get(tile), true);
+                    newMap.setTile(x, y, newTile);
                 }
                 /*
                 // check if the char represents a sprite
@@ -95,13 +95,13 @@ public class TileMapManager {
 
     
     public void loadTileImages() {
-        tiles = new ArrayList<Tile>();
+        tileImages = new ArrayList<>();
         char ch = 'A';
         while (true) {
             Image tileImage = ImageManager.getImage("tiles_tile_" + ch);
             if (tileImage == null) { break; } 
             else System.out.println("[TILEMAP MANAGER] Tile loaded: tile_" + ch);
-            tiles.add(new Tile(tileImage, TILE_SIZE, true));
+            tileImages.add(tileImage.getScaledInstance(GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, Image.SCALE_SMOOTH));
             if (ch == 'Z') { break; }
             ch++;
         }
