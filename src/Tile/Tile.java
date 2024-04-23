@@ -1,20 +1,18 @@
 package Tile;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Graphics2D;
 
 public class Tile {
     
     private Image image;
-    private int width;
-    private int height;
     private boolean isSolid;
     private Point position;
 
-    public Tile(Image image, int size, boolean isSolid) {
-        this.image = image;
-        this.width = this.height = size;
+    public Tile(Image image, boolean isSolid) {
+        setImage(image);
+        position = new Point(0, 0);
         this.isSolid = isSolid;
     }
 
@@ -24,8 +22,6 @@ public class Tile {
     public boolean isSolid() { return isSolid; }
 
     public Image getImage() { return image; }
-
-    public int getSize() { return width; }
 
     public Point getPosition() { return position; }
 
@@ -46,6 +42,6 @@ public class Tile {
     /** Methods */
 
     public void draw(Graphics2D g2d, int x, int y) {
-        g2d.drawImage(image, x, y, width, height, null);
+        g2d.drawImage(image, x, y, image.getWidth(null), image.getHeight(null), null);
     }
 }
