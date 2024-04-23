@@ -1,0 +1,227 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "GraveyardShift.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Bats.tsx": {
+            "scaleInDock": 1
+        },
+        "Bush (1).tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Bush (2).tsx": {
+            "scaleInDock": 1
+        },
+        "Candle Glow.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Candle.tsx": {
+            "scaleInDock": 1
+        },
+        "Coin 1.tsx": {
+            "scaleInDock": 1
+        },
+        "Crow.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "DeadBush.tsx": {
+            "scaleInDock": 1
+        },
+        "Fence.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Ghost Silhoute.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "GraveyardShift.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1262,
+                "y": 964
+            }
+        },
+        "Ground 01.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Ground 02.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Ground 03.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 04.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 05.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 06.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 07.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 08.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 09.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 10.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 11.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 12.tsx": {
+            "scaleInDock": 1
+        },
+        "Ground 13.tsx": {
+            "scaleInDock": 1
+        },
+        "Hp Potion.tsx": {
+            "scaleInDock": 1
+        },
+        "Key.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Ladder-1.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Ladder.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Lamp Post.tsx": {
+            "scaleInDock": 1
+        },
+        "MP Potion.tsx": {
+            "scaleInDock": 1
+        },
+        "Pillar.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Plants 1.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Plants 2.tsx": {
+            "scaleInDock": 1
+        },
+        "Prison House.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Ruins.tsx": {
+            "scaleInDock": 1
+        },
+        "SOS.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Signpost 01.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Signpost 06.tsx": {
+            "scaleInDock": 1
+        },
+        "Single bat.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Skeleton.tsx": {
+            "scaleInDock": 1
+        },
+        "Skull Pile.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Skull.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Spider Eggs.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Spider Web 2.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Spider Web.tsx": {
+            "scaleInDock": 1
+        },
+        "Spider.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Spooky Tree 01.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Spooky Tree 03.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Tomb 01.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "TombStone 3.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "TombStone 4.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Tree.tsx": {
+            "scaleInDock": 1
+        },
+        "grave-ladder.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "keys-01.tsx": {
+            "scaleInDock": 1
+        },
+        "keys-03.tsx": {
+            "scaleInDock": 1
+        },
+        "keys-06.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "last.externalTilesetPath": "C:/Users/User/Desktop/GraveyardShift",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 128,
+    "map.tileWidth": 128,
+    "openFiles": [
+        "GraveyardShift.tmx"
+    ],
+    "project": "GraveyardShift.tiled-project",
+    "recentFiles": [
+        "GraveyardShift.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 128,
+        "width": 128
+    }
+}
