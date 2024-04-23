@@ -2,6 +2,8 @@ package Entity;
 
 import java.awt.Graphics2D;
 
+import Game.Movement;
+
 /**
  * MovingEntity.java
  */
@@ -12,8 +14,9 @@ public abstract class MovingEntity extends Entity {
         super(x, y, width, height);
     }
 
-
     public abstract void update();
-
+    
+    public abstract void move(Movement direction);
+    
     public abstract void draw(Graphics2D g2d, int x, int y);
 }
