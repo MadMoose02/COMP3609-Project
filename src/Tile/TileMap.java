@@ -23,17 +23,12 @@ public class TileMap {
     
     private BackgroundManager bgManager;
     private Player player;
-    private Heart heart;
-
-    private GamePanel panel;
 
     /**
         Creates a new TileMap with the specified width and
         height (in number of tiles) of the map.
     */
     public TileMap(GamePanel panel, int width, int height) {
-
-        this.panel = panel;
 
         screenWidth = panel.getSize().width;
         screenHeight = panel.getSize().height;
@@ -49,14 +44,13 @@ public class TileMap {
 
         tiles = new Tile[mapWidth][mapHeight];
         player = new Player(panel, this);
-        heart = new Heart(panel, player);
 
         int playerHeight = player.getHeight();
         int x = GamePanel.TILE_SIZE * 3;
         int y = ((mapHeight - 1) * GamePanel.TILE_SIZE) - playerHeight;
         player.setPosition(x, y);
-
-        System.out.println("[TILEMAP] Player(" + player.getWidth() + "," + player.getHeight() + ") spawned @ (" + x + "," + y + ")");
+        System.out.println("[TILEMAP] Player(" + player.getWidth() + "," + 
+            player.getHeight() + ") spawned @ (" + x + "," + y + ")");
     }
 
 
@@ -100,42 +94,45 @@ public class TileMap {
     }
 
     public Tile getTileAtLocation(int x, int y) {
-        int xTile = pixelsToTiles(x);
-        int yTile = pixelsToTiles(y);
-        return getTile(xTile, yTile);
+        return getTile(pixelsToTiles(x), pixelsToTiles(y));
     }
 
-
     /**
-        Sets the tile at the specified location.
-    */
+     * Sets the tile at the specified location.
+     * 
+     * @param x    The x coordinate of the tile
+     * @param y    The y coordinate of the tile
+     * @param tile The tile object to place at the location
+     */
     public void setTile(int x, int y, Tile tile) { tiles[x][y] = tile; }
 
-
     /**
-        Class method to convert a pixel position to a tile position.
-    */
-
+     * Class method to convert a pixel position to a tile position.
+     * 
+     * @param pixels The pixel position to convert
+     * @return       The tile position
+     */
     public static int pixelsToTiles(float pixels) {
         return pixelsToTiles(Math.round(pixels));
     }
 
-
     /**
-        Class method to convert a pixel position to a tile position.
-    */
-
+     * Class method to convert a pixel position to a tile position.
+     * 
+     * @param pixels The pixel position to convert
+     * @return       The tile position
+     */
     public static int pixelsToTiles(int pixels) {
         return (int) Math.floor((float)pixels / GamePanel.TILE_SIZE);
     }
 
-
-    /**
-        Class method to convert a tile position to a pixel position.
-    */
-
+    /** 
+     * Class method to get the number of pixels occupied by a specified number of tiles.
+     * 
+     * @param numTiles The number of tiles to convert to pixels
+     * @return         The number of pixels occupied by the specified number of tiles
+     */
     public static int tilesToPixels(int numTiles) { return numTiles * GamePanel.TILE_SIZE; }
-    
     
     /**
      * Checks if the specified coordinates collide with a tile.
@@ -235,22 +232,10 @@ public class TileMap {
 
         // draw player
         player.draw(g2, player.getX(), player.getY() + offsetY);
-
-	    // draw Heart sprite
-        heart.draw(g2, 0, 0);
     }
 
     public void update() {
         player.update();
-
-        if (heart.collidesWithPlayer()) {
-            panel.endLevel();
-            return;
-        }
-
-        if (heart.collidesWithPlayer()) {
-            panel.endLevel();
-        }
     }
 
     public void moveLeft() {
