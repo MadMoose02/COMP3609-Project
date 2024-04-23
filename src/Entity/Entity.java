@@ -56,9 +56,9 @@ public abstract class Entity {
     
     public void setPosition(int x, int y) { this.position = new Point(x, y); }
     
-    public void setX(int x) { position.x += (position.x + x < 0) ? 0 : x; }
+    public void setX(int x) { position.x = (position.x + x < 0) ? 0 : x; }
 
-    public void setY(int y) { position.y += (position.y + y < 0) ? 0 : y; }
+    public void setY(int y) { position.y = (position.y + y < 0) ? 0 : y; }
 
     public void setDX(int dX) { this.dX = dX; }
 
@@ -68,13 +68,18 @@ public abstract class Entity {
 
     public void setHeight(int height) { this.height = height; }
 
-    public void setImage(Image image) { this.image = image; }
+    public void setImage(Image image) { 
+        this.image = image;
+        setSize(image.getWidth(null), image.getHeight(null));
+    }
 
     public void setSize(int width, int height) {
         this.width = width;
         this.height = height;
+        if (image == null) { return; }
+        if (image.getWidth(null) == width && image.getHeight(null) == height) { return; }
         height = (int) ((double) image.getHeight(null) / image.getWidth(null) * height);
-        this.image = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        this.image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
     }
     
     public void setSize(int size) {
