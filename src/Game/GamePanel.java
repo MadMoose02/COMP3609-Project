@@ -1,16 +1,16 @@
 package Game;
 
-import javax.swing.JPanel;
 
-import java.awt.image.BufferedImage;
+import javax.swing.JPanel;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
-import Managers.*;
 import Tile.*;
 import Entity.*;
+import Managers.*;
 
 /**
    A component that displays all the game entities
@@ -127,19 +127,16 @@ public class GamePanel extends JPanel implements Runnable {
 			try {
                 createGameEntities();
 				tileMap = tileManager.loadMap("map1.txt");
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
-				System.out.println ("[GAMEPANEL] Tilemap Size: " + w + " x " + h);
+				System.out.println ("[GAMEPANEL] Tilemap Size: " + 
+                    tileMap.getWidth() + " x " + tileMap.getHeight());
 			}
 			catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
                 System.exit(0);
 			}
 
-
 			gameThread = new Thread(this);
-			gameThread.start();			
+			gameThread.start();
 
 		}
 	}
