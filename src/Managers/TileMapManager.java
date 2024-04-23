@@ -16,7 +16,8 @@ public class TileMapManager {
     private ArrayList<Tile> tiles;
     private GamePanel panel;
     private static final int TILE_SIZE = 64;
-    private static final String MAP_FOLDER = System.getProperty("user.dir") + File.separator + "assets" + File.separator + "maps";
+    private static final String MAP_FOLDER = System.getProperty("user.dir") + 
+        File.separator + "assets" + File.separator + "maps";
 
     public TileMapManager(GamePanel panel) {
         System.out.println("[TILEMAP MANAGER] Initialising");
@@ -50,16 +51,16 @@ public class TileMapManager {
                 mapWidth = Math.max(mapWidth, line.length());
             }
         }
-
+        
         // parse the lines to create a TileMap
         mapHeight = lines.size();
-
+        
         TileMap newMap = new TileMap(panel, mapWidth, mapHeight);
         for (int y = 0; y < mapHeight; y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 char ch = line.charAt(x);
-
+                
                 // check if the char represents tile A, B, C etc.
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
@@ -85,7 +86,7 @@ public class TileMapManager {
                 */
             }
         }
-
+        
         return newMap;
     }
 
