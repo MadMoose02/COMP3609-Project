@@ -89,7 +89,10 @@ public class Player extends MovingEntity {
         for (Animation anim : animations.values()) { anim.update(); }
         
         // If the player is in freefall (in air but not jumping), fall down
-        if (isInAir()) { fall(); } else { jumping = falling = false; }
+        if (isInAir()) { fall(); } else { 
+            jumping = falling = false; 
+            stand();
+        }
         
         // Calculate the distance travelled since the last update
         timeElapsed = (System.currentTimeMillis() - timeStarted)/1000;
@@ -98,15 +101,15 @@ public class Player extends MovingEntity {
         
         // Update position based on trajectory
         if (isJumping()) {
-            initialVelocity -= 1;
+            initialVelocity -= 4.9 * timeElapsed;
             setY(jumpHeightStart - distance);
+            setX((int) (getX() + (facingLeft ? -getDX() : getDX()) * 0.2));
         }
         
         if (isFalling()) {
-            // System.out.println("[PLAYER] Falling");
-            initialVelocity += 9.8 * timeElapsed;
+            initialVelocity += (9.8 * timeElapsed >= 60) ? 60 : 9.8 * timeElapsed;
             setY(fallHeightStart + distance);
-        }
+        } 
     }
 
     @Override
@@ -151,22 +154,15 @@ public class Player extends MovingEntity {
 
     private boolean isCrouching() { return crouching; }
 
-    private boolean isJumping() { 
-        // return animations.get("jump_left").isStillActive() || 
-        //         animations.get("jump_right").isStillActive(); 
-        return jumping;
-    }
+    private boolean isJumping() { return jumping; }
     
-    private boolean isFalling() {
-        // int tileX = (int)((getX() + getWidth()/2) / GamePanel.TILE_SIZE);
-        // int tileY = (int)((getY() + getHeight() + 1) / GamePanel.TILE_SIZE);
-        // return tileMap.collidesWithTile(tileX, tileY) == null;
-        return falling;
-    }
+    private boolean isFalling() { return falling; }
     
     private boolean isWalking() { 
         return animations.get("walk_left").isStillActive() ||
-                animations.get("walk_right").isStillActive(); 
+                animations.get("walk_right").isStillActive() ||
+                animations.get("crouch_left").isStillActive() ||
+                animations.get("crouch_right").isStillActive();
     }
 
     private boolean isTurning() { 
@@ -174,30 +170,27 @@ public class Player extends MovingEntity {
                 animations.get("turn_right").isStillActive(); 
     }
 
+    /**
+     * Checks if the player is in the air. At least half of the player's width must not
+     * collide with a tile to be considered in the air.
+     * 
+     * @return {@code true} if the player is in the air, {@code false} otherwise
+     */
     public boolean isInAir() {
-        
-        // 3/4 of the player's width must be in the air to be considered in air
-        if (facingLeft) {
-            if (tileMap.collidesWithTile(getX() + (3 * getWidth()/4), getY() + getHeight()) == null) { return true; }
-        } else {
-            if (tileMap.collidesWithTile(getX() + (getWidth()/4), getY() + getHeight()) == null) { return true; }
-        }
+        if (tileMap.collidesWithTile(getX() + (getWidth()/2), getY() + getHeight()) == null) { return true; }
         return false;
     }
     
     private void turnAround() {
-        if (isTurning()) { return; }
+        if (isTurning() || isCrouching()) { return; }
         facingLeft = !facingLeft;
         if (isInAir()) { return; }
+        animations.get((facingLeft) ? "turn_left" : "turn_right").start(); 
+        setImage(ImageManager.getImage((facingLeft) ? 
+            (crouching ? "player_crouch_left_1" : "player_idle_left_1") : 
+            (crouching ? "player_crouch_right_1" : "player_idle_right_1")
+        ));
 
-        if (facingLeft) { 
-            animations.get("turn_left").start(); 
-            setImage(ImageManager.getImage((crouching) ? "player_crouch_left_1" : "player_idle_left_1"));
-        } 
-        else { 
-            animations.get("turn_right").start(); 
-            setImage(ImageManager.getImage((crouching) ? "player_crouch_right_1" : "player_idle_right_1"));
-        }
     }
     
     private void doWalkAnimation() {
@@ -258,7 +251,7 @@ public class Player extends MovingEntity {
 
     private void fall() {
         if (!animations.get(facingLeft ? "fall_left" : "fall_right").isStillActive()) doFallAnimation();
-        if (isJumping() || falling) { return; }
+        if (isJumping() || isFalling()) { return; }
         falling = true;
         initialVelocity = 60;
         timeElapsed = 0;
@@ -268,33 +261,36 @@ public class Player extends MovingEntity {
 
     public void jump() {  
         if (isFalling() || jumping) { return; }
-        if (crouching) { 
-            crouching = false; 
+        if (isCrouching()) { 
+            stand(); 
             return;
         }
         jumping = true;
-        initialVelocity = 280;
+        initialVelocity = 350;
         timeElapsed = 0;
         timeStarted = System.currentTimeMillis();
         jumpHeightStart = getY();
+        if (facingLeft) { setImage(ImageManager.getImage("player_jump_left_1")); }
+        else { setImage(ImageManager.getImage("player_jump_right_1")); }
         doJumpAnimation();
     }
 
     public void crouch() {
         if (isCrouching()) { return; }
         crouching = true;
-        System.out.println("[PLAYER] Toggled player crouch ON");
+        int lastHeight = getHeight();
         if (facingLeft) { setImage(ImageManager.getImage("player_crouch_left_1")); }
         else { setImage(ImageManager.getImage("player_crouch_right_1")); }
+        setY(getY() + (lastHeight - getHeight()));
         doCrouchAnimation();
     }
     
     public void stand() {
-        if (!isCrouching()) { return; }
         crouching = false;
-        System.out.println("[PLAYER] Toggled player crouch OFF");
+        int lastHeight = getHeight();
         if (facingLeft) { setImage(ImageManager.getImage("player_idle_left_1")); }
         else { setImage(ImageManager.getImage("player_idle_right_1")); }
+        setY(getY() - (getHeight() - lastHeight));
     }
 
 }
