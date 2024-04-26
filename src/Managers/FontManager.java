@@ -1,7 +1,4 @@
 package Managers;
-/**
- * FontManager.java
- */
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -9,28 +6,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+
 /**
- * Custom Font management class that loads fonts from the assets folder.
+ * FontManager.java <hr>
+ * Manages the usage of custom fonts.
  */
 public class FontManager {
     
     private static FontManager instance;
     private static HashMap<String, Font> fonts;
-    private static final String FONTS_FOLDER = System.getProperty("user.dir") + File.separator + 
-                                                  "assets" + File.separator + "fonts";
+    private static final String FONTS_FOLDER = System.getProperty("user.dir") + 
+        File.separator + "assets" + File.separator + "fonts";
 
     public FontManager() {
         System.out.println("[FONT MANAGER] Initialising");
-        FontManager.fonts = new HashMap<>();
+        fonts = new HashMap<>();
     }
 
     public static synchronized FontManager getInstance() {
-        if (FontManager.fonts == null) {
-            FontManager.instance = new FontManager();
-            try { FontManager.loadDefaultFonts(); }
+        if (fonts == null) {
+            instance = new FontManager();
+            try { loadDefaultFonts(); }
             catch (Exception e) { System.out.println(e); }
         }
-        return FontManager.instance;
+        return instance;
     }
 
     public static void loadDefaultFonts() {
@@ -41,11 +40,11 @@ public class FontManager {
             switch (ext) {
 
                 case "ttf":
-                    FontManager.fonts.put(fontName, FontManager.loadTTF(fontName + ".ttf"));
+                    fonts.put(fontName, loadTTF(fontName + ".ttf"));
                     break;
 
                 case "otf":
-                    FontManager.fonts.put(fontName, FontManager.loadOTF(fontName + ".otf"));
+                    fonts.put(fontName, loadOTF(fontName + ".otf"));
                     break;
 
                 default:
@@ -73,9 +72,9 @@ public class FontManager {
     }
 
     public static Font getFont(String fontName) {
-        if (!FontManager.fonts.containsKey(fontName)) {
+        if (!fonts.containsKey(fontName)) {
             System.out.println("[FONT MANAGER] No such font exists: " + fontName);
         }
-        return FontManager.fonts.get(fontName);
+        return fonts.get(fontName);
     }
 }

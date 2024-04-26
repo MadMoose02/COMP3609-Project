@@ -5,291 +5,291 @@ package Entity;
  */
 
 import java.awt.Image;
-import java.awt.Point;
+import java.util.HashMap;
+import java.awt.Color;
 import java.awt.Graphics2D;
-import javax.swing.JPanel;
 
 import Game.*;
-import Managers.*;
 import Tile.*;
+import Managers.*;
+import Animation.*;
 
 
 public class Player extends MovingEntity {			
 
-    private JPanel panel;
+    /** Reference to the TileMap */
     private TileMap tileMap;
-
-    /** Player's x coordinate in pixels */
-    private int x;
-    /** Player's y coordinate in pixels */
-    private int y;
-
-    private boolean jumping;
-    private int timeElapsed;
-
+    /** Time elapsed since start of jump or fall */
+    private double timeElapsed;
+    /** Time at which jump or fall started */
+    private double timeStarted;
+    /** Initial velocity when falling */
+    private double initialVelocity;
+    /** Height at which player started to fall */
+    private int fallHeightStart;
+    /** Height at which player started to jump */
+    private int jumpHeightStart;
+    /** True if player is facing left, false if facing right */
     private boolean facingLeft;
-
+    /** True if player is crouching, false if standing */
+    private boolean crouching;
     private boolean falling;
-    private int initialVelocity;
-
-    private Animation idleAnimation;
-    private Animation walkAnimation;
-    private Animation standAnimation;
-    private Animation turnLeftAnimation;
-    private Animation turnRightAnimation;
-    private Animation jumpAnimation;
-
-    private final int jumpHeight = 30;
-    private final int frameDuration = 50;
+    private boolean jumping;
+    /** Collection of all player animations */
+    private HashMap<String, Animation> animations;
 
 
-    public Player (JPanel panel, TileMap t) {
+    public Player(TileMap t) {
         super(0, 0, 0, 0);
-        this.panel = panel;
         tileMap = t;
-        facingLeft = falling = jumping = false;
-        setImage(ImageManager.getImage("player_idle_1"));
-        setSize(62);
-        setDX(2);
-        setDY(5);
+        facingLeft = crouching = false;
+        initialVelocity = timeElapsed = 0;
+        setSize(60);
+        setDX(5);
+        setDY(1);
         loadPlayerAnimations();
+        setImage(ImageManager.getImage("player_idle_right_1"));
     }
 
-    private void loadPlayerAnimations() {
-        String key = "player_idle_";
-        int idx = 1;
-
-        // Load idle animation
-        idleAnimation = new Animation(false);
-        int[] frameNums = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5};
-        for (int frameNum : frameNums) {
-            Image img = ImageManager.getImage(key + frameNum);
-            idleAnimation.addFrame(img, frameDuration);
-        }
-        System.out.println("[PLAYER] Loaded idle animation");
-
-        // Load stand animation
-        key = "player_idle_";
-        frameNums = new int[]{4, 3, 2, 1};
-        standAnimation = new Animation(false);
-        for (int frameNum : frameNums) {
-            Image img = ImageManager.getImage(key + frameNum);
-            standAnimation.addFrame(img, frameDuration);
-        }
-        System.out.println("[PLAYER] Loaded stand animation");
-        
-        // Load walk animation
-        key = "player_walk_";
-        idx = 1;
-        walkAnimation = new Animation(false);
-        while (true) {
-            Image img = ImageManager.getImage(key + idx);
-            if (img == null) break;
-            walkAnimation.addFrame(img, frameDuration * 1);
-            idx++;
-        }
-        System.out.println("[PLAYER] Loaded walk animation");
-        
-        // Load turn left animation
-        key = "player_turn_";
-        idx = 1;
-        turnLeftAnimation = new Animation(false);
-        while (true) {
-            Image img = ImageManager.getImage(key + idx);
-            if (img == null) break;
-            turnLeftAnimation.addFrame(img, frameDuration * 2);
-            idx++;
-        }
-        System.out.println("[PLAYER] Loaded turn left animation");
-
-        // Load turn right animation
-        key = "player_turn_";
-        idx = turnLeftAnimation.getNumFrames();
-        turnRightAnimation = new Animation(false);
-        while (true) {
-            Image img = ImageManager.getImage(key + idx);
-            if (img == null) break;
-            turnRightAnimation.addFrame(img, frameDuration * 2);
-            idx--;
-        }
-        System.out.println("[PLAYER] Loaded turn right animation");
-
-        // Load jump animation
-        key = "player_jump_";
-        idx = 1;
-        jumpAnimation = new Animation(false);
-        while (true) {
-            Image img = ImageManager.getImage(key + idx);
-            if (img == null) break;
-            jumpAnimation.addFrame(img, frameDuration);
-            idx++;
-        }
-        System.out.println("[PLAYER] Loaded jump animation");
-    }
-
-    public synchronized void move (Movement direction) {
-
-        if (!panel.isVisible ()) return;
-        if (turnLeftAnimation.isStillActive() || turnRightAnimation.isStillActive()) return;
-        
-        // Handle player movement
+    @Override
+    public synchronized void move(Movement direction) {
+        if (isTurning()) { return; }
         switch (direction) {
 
             case LEFT:
-                if (!facingLeft) {
-                    doTurnAroundAnimation();
-                    return;
-                }
-                System.out.println ("[PLAYER] Moved left: " + getX());
-                setX(x - getDX());
+                moveLeft();
                 break;
 
             case RIGHT:
-                if (facingLeft) {
-                    doTurnAroundAnimation();
-                    return;
-                }
-                System.out.println ("[PLAYER] Moved right: " + getX());
-                setX(x + getDX());
-                if (x + width > tileMap.getWidthPixels()) {
-                    setX(tileMap.getWidthPixels() - width);
-                    return;
-                }
+                moveRight();
                 break;
 
             case JUMP:
-                System.out.println ("[PLAYER] Jumped: " + getX());
-                if (!jumping) {
-                    jump();
-                    return;
-                }
+                jump();
+                break;
+
+            case CROUCH:
+                crouch();
+                break;
+
+            case STAND:
+                stand();
                 break;
 
             default:
                 System.out.println ("[PLAYER] Unknown direction: " + direction);
                 return;
         }
-        doWalkAnimation();
-        if (isInAir()) { fall(); }
     }
 
-    private void doWalkAnimation() {
-        if (!panel.isVisible ()) return;
-        if (walkAnimation.isStillActive()) return;
-        walkAnimation.start();
-        System.out.println("[PLAYER] Walk animation started");
+    @Override
+    public void update() {
+        
+        // Update all active animations
+        for (Animation anim : animations.values()) { anim.update(); }
+        
+        // If the player is in freefall (in air but not jumping), fall down
+        if (isInAir()) { fall(); } else { 
+            jumping = falling = false; 
+            if (!isCrouching()) stand();
+        }
+        
+        // Calculate the distance travelled since the last update
+        timeElapsed = (System.currentTimeMillis() - timeStarted)/1000;
+        int distance = (int) ((initialVelocity * timeElapsed) + (4.9 * timeElapsed * timeElapsed));
+        initialVelocity += 0.5 * timeElapsed;
+        
+        // Update position based on trajectory
+        if (isJumping()) {
+            initialVelocity -= 4.9 * timeElapsed;
+            setY(jumpHeightStart - distance);
+            setX(getX() + (facingLeft ? -(getDX()) : getDX()) * 0.2);
+        }
+        
+        if (isFalling()) {
+            initialVelocity += (9.8 * timeElapsed >= 60) ? 60 : 9.8 * timeElapsed;
+            setY(fallHeightStart + distance);
+        } 
     }
 
-    private void doTurnAroundAnimation() {
-        if (!panel.isVisible ()) return;
-        if (turnLeftAnimation.isStillActive() || turnRightAnimation.isStillActive()) return;
+    @Override
+    public void draw(Graphics2D g2d) {
+        Image img = getImage();
+        for (Animation anim : animations.values()) {
+            if (anim.isStillActive()) { img = anim.getImage(); }
+        }
+
+        // draw player's current image
+        g2d.drawImage(
+            img, getX(), getY(),
+            img.getWidth(null), 
+            img.getHeight(null), 
+            null
+        );
+
+        // draw player hitbox with coordinates
+        g2d.setColor(Color.BLACK);
+        g2d.drawString("(" + getX() + ", " + getY() + ")", getX(), getY() - 10);
+        g2d.drawRect(getX(), getY(), getWidth(), getHeight());
+    }
+
+    private void loadPlayerAnimations() {
+        String[] animationNames = new String[]{
+            "idle_left",   "idle_right",
+            "walk_left",   "walk_right",
+            "turn_left",   "turn_right",
+            "jump_left",   "jump_right",
+            "crouch_left", "crouch_right",
+            "fall_left",   "fall_right",
+            "climb_up",    "climb_down"
+        };
+        animations = new HashMap<String, Animation>();
+        for (String name : animationNames) {
+            Animation anim = new PlayerAnimation("player_" + name, 5000);
+            animations.put(name, anim);
+            System.out.println("[PLAYER] Loaded animation: " + anim.getName());
+        }
+    }
+
+    private boolean isCrouching() { return crouching; }
+
+    private boolean isJumping() { return jumping; }
+    
+    private boolean isFalling() { return falling; }
+    
+    private boolean isWalking() { 
+        return animations.get("walk_left").isStillActive() ||
+                animations.get("walk_right").isStillActive() ||
+                animations.get("crouch_left").isStillActive() ||
+                animations.get("crouch_right").isStillActive();
+    }
+
+    private boolean isTurning() { 
+        return animations.get("turn_left").isStillActive() || 
+                animations.get("turn_right").isStillActive(); 
+    }
+
+    /**
+     * Checks if the player is in the air. At least half of the player's width must not
+     * collide with a tile to be considered in the air.
+     * 
+     * @return {@code true} if the player is in the air, {@code false} otherwise
+     */
+    public boolean isInAir() {
+        if (tileMap.collidesWithTile(getX() + (getWidth()/2), getY() + getHeight()) == null) { return true; }
+        return false;
+    }
+    
+    private void turnAround() {
+        if (isTurning() || isCrouching()) { return; }
         facingLeft = !facingLeft;
+        if (isInAir()) { return; }
+        animations.get((facingLeft) ? "turn_left" : "turn_right").start(); 
+        setImage(ImageManager.getImage((facingLeft) ? 
+            (crouching ? "player_crouch_left_1" : "player_idle_left_1") : 
+            (crouching ? "player_crouch_right_1" : "player_idle_right_1")
+        ));
 
-        if (facingLeft) { turnLeftAnimation.start(); } 
-        else { turnRightAnimation.start(); }
-        System.out.println("[PLAYER] Turn animation started");
+    }
+    
+    private void doWalkAnimation() {
+        if (isWalking() || isInAir()) { return; }
+        Animation walk;
+        if (crouching) { walk = animations.get((facingLeft) ? "crouch_left" : "crouch_right"); }
+        else { walk = animations.get((facingLeft) ? "walk_left" : "walk_right"); }
+        
+        // Boundary checks before starting animation
+        if ((getX() + getWidth()) >= tileMap.getWidthPixels()) {
+            setX(tileMap.getWidthPixels() - width);
+            if (!facingLeft) { turnAround(); }
+            return;
+        
+        } else if (getX() <= 0) {
+            setX(0);
+            if (facingLeft) { turnAround(); }
+            return;
+        }
+
+        walk.start();
     }
 
     private void doJumpAnimation() {
-        if (!panel.isVisible ()) return;
-        if (turnLeftAnimation.isStillActive() || turnRightAnimation.isStillActive()) return;
-        jumpAnimation.start();
-        System.out.println("[PLAYER] Jump animation started");
+        if (isTurning() || isInAir()) { return; }
+        if (facingLeft) { animations.get("jump_left").start(); } 
+        else { animations.get("jump_right").start(); }
     }
 
-    public boolean isInAir() {
-        if (jumping || falling) { return true; }
-        if (tileMap.collidesWithTile(x, y + this.height + 1) != null) return true;
-        return false;
+    private void doFallAnimation() {
+        if (facingLeft) { animations.get("fall_left").start(); }
+        else { animations.get("fall_right").start(); }
+    }
+
+    private void doCrouchAnimation() {
+        if (isCrouching()) { return; }
+        if (facingLeft) { animations.get("crouch_left").start(); }
+        else { animations.get("crouch_right").start(); }
+    }
+
+    private void moveLeft() {
+        if (!facingLeft) {
+            turnAround();
+            return;
+        }
+        setX(getX() - getDX());
+        doWalkAnimation();
+    }
+
+    private void moveRight() {
+        if (facingLeft) {
+            turnAround();
+            return;
+        }
+        setX(getX() + getDX());
+        doWalkAnimation();
     }
 
     private void fall() {
-        if (!panel.isVisible ()) return;
-        jumping = false;
+        if (!animations.get(facingLeft ? "fall_left" : "fall_right").isStillActive()) doFallAnimation();
+        if (isJumping() || isFalling()) { return; }
         falling = true;
+        initialVelocity = 60;
         timeElapsed = 0;
-        initialVelocity = 0;
+        timeStarted = System.currentTimeMillis();
+        fallHeightStart = getY();
     }
 
-    public void jump () {  
-        if (!panel.isVisible ()) return;
+    public void jump() {  
+        if (isFalling() || isJumping()) { return; }
+        if (isCrouching()) { 
+            stand(); 
+            return;
+        }
         jumping = true;
-        falling = false;
-        initialVelocity = 70;
+        initialVelocity = 350;
+        timeElapsed = 0;
+        timeStarted = System.currentTimeMillis();
+        jumpHeightStart = getY();
+        if (facingLeft) { setImage(ImageManager.getImage("player_jump_left_1")); }
+        else { setImage(ImageManager.getImage("player_jump_right_1")); }
         doJumpAnimation();
     }
 
-    @Override
-    public void update () {
-        timeElapsed++;
-        if (!panel.isVisible ()) { return; }
-        
-        int distance = (int) (initialVelocity * timeElapsed - 4.9 * Math.pow(timeElapsed, 2));
-
-        // Update all active animations
-        if (turnLeftAnimation.isStillActive())  { turnLeftAnimation.update(); }
-        if (turnRightAnimation.isStillActive()) { turnRightAnimation.update(); }
-        if (walkAnimation.isStillActive())      { walkAnimation.update(); }
-        if (jumpAnimation.isStillActive())      { jumpAnimation.update(); }
-
-        // Achieved max trajectory height, start falling
-        if (jumping && (getY() - distance) >= jumpHeight) {
-            fall();
-            jumping = false;
-        }
-
-        if (jumping) {
-            Point tilePos = tileMap.collidesWithTileUp(this, getX(), getY() - getDY());	
-            
-            // handle collision with tile above player
-            if (tilePos == null) {
-                setY(getY() - getDY());
-                System.out.println ("[PLAYER] Jumping: No collision (" + getY() + ")");
-            
-            } else {
-                System.out.println ("[PLAYER] Jumping: Collision with tile at (" + tilePos.getX() + ", " + tilePos.getY() + ")");
-                int offsetY = tileMap.getOffsetY();
-                int topTileY = ((int) tilePos.getY()) * GamePanel.TILE_SIZE + offsetY;
-                int bottomTileY = topTileY + GamePanel.TILE_SIZE;
-                setY(bottomTileY);
-                fall();
-                jumping = false;
-            }
-        }
-        
-        if (falling) {
-            Point tilePos = tileMap.collidesWithTileDown(this, getX(), getY() + getDY());	
-            
-            // handle collision with tile below player
-            if (tilePos == null) {
-                setY(getY() + getDY());
-                System.out.println ("[PLAYER] Falling: No collision (" + getY() + ")");
-            
-            } else {
-                System.out.println ("[PLAYER] Falling: Collision with tile at (" + tilePos.getX() + ", " + tilePos.getY() + ")");
-                // int offsetY = tileMap.getOffsetY();
-                int topTileY = ((int) tilePos.getY()) - getHeight();
-                setY(topTileY - this.height);
-                falling = false;
-            }
-        }
+    public void crouch() {
+        if (isCrouching()) { return; }
+        crouching = true;
+        int lastHeight = getHeight();
+        if (facingLeft) { setImage(ImageManager.getImage("player_crouch_left_1")); }
+        else { setImage(ImageManager.getImage("player_crouch_right_1")); }
+        setY(getY() + (lastHeight - getHeight()));
+        doCrouchAnimation();
+    }
+    
+    public void stand() {
+        crouching = false;
+        int lastHeight = getHeight();
+        if (facingLeft) { setImage(ImageManager.getImage("player_idle_left_1")); }
+        else { setImage(ImageManager.getImage("player_idle_right_1")); }
+        setY(getY() - (getHeight() - lastHeight));
     }
 
-    @Override
-    public void draw(Graphics2D g2d, int x, int y) {
-        if (!panel.isVisible ()) { return; }
-
-        Image img = facingLeft ? ImageManager.flipImageHorizontally(idleAnimation.getImage()) : idleAnimation.getImage();
-
-        if (turnLeftAnimation.isStillActive())  { img = turnLeftAnimation.getImage(); }
-        if (turnRightAnimation.isStillActive()) { img = turnRightAnimation.getImage(); }
-        if (jumpAnimation.isStillActive())      { img = jumpAnimation.getImage(); }
-        if (walkAnimation.isStillActive())      { 
-            img = facingLeft ? ImageManager.flipImageHorizontally(walkAnimation.getImage()) : walkAnimation.getImage(); 
-        }
-
-        x -= img.getWidth(null)/2;
-
-        g2d.drawImage(img, x, y, img.getWidth(null), img.getHeight(null), null);
-    }
 }
