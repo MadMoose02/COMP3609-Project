@@ -229,7 +229,7 @@ public class TileMap {
         }
 
         // draw player
-        player.draw(g2, player.getX(), player.getY() + tilemapOffsetY);
+        player.draw(g2);
     }
 
     public void update() {
