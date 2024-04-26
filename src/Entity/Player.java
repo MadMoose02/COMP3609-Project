@@ -91,7 +91,7 @@ public class Player extends MovingEntity {
         // If the player is in freefall (in air but not jumping), fall down
         if (isInAir()) { fall(); } else { 
             jumping = falling = false; 
-            stand();
+            if (!isCrouching()) stand();
         }
         
         // Calculate the distance travelled since the last update
@@ -103,7 +103,7 @@ public class Player extends MovingEntity {
         if (isJumping()) {
             initialVelocity -= 4.9 * timeElapsed;
             setY(jumpHeightStart - distance);
-            setX((int) (getX() + (facingLeft ? -getDX() : getDX()) * 0.2));
+            setX(getX() + (facingLeft ? -(getDX()) : getDX()) * 0.2);
         }
         
         if (isFalling()) {
@@ -113,14 +113,13 @@ public class Player extends MovingEntity {
     }
 
     @Override
-    public void draw(Graphics2D g2d, int x, int y) {
+    public void draw(Graphics2D g2d) {
         Image img = getImage();
         for (Animation anim : animations.values()) {
             if (anim.isStillActive()) { img = anim.getImage(); }
         }
 
-        x += img.getWidth(null)/2;
-
+        // draw player's current image
         g2d.drawImage(
             img, getX(), getY(),
             img.getWidth(null), 
@@ -260,7 +259,7 @@ public class Player extends MovingEntity {
     }
 
     public void jump() {  
-        if (isFalling() || jumping) { return; }
+        if (isFalling() || isJumping()) { return; }
         if (isCrouching()) { 
             stand(); 
             return;
