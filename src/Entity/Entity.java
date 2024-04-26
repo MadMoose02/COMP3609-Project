@@ -56,9 +56,17 @@ public abstract class Entity {
     
     public void setPosition(int x, int y) { this.position = new Point(x, y); }
     
-    public void setX(int x) { position.x = (position.x + x < 0) ? 0 : x; }
+    public void setX(int x) { position.x = (x < 0) ? 0 : x; }
 
-    public void setY(int y) { position.y = (position.y + y < 0) ? 0 : y; }
+    public void setX(float x) { position.x = (x < 0) ? 0 : Math.round(x); }
+
+    public void setX(double x) { position.x = (x < 0) ? 0 : Math.round((float) x); }
+
+    public void setY(int y) { position.y = (y < 0) ? 0 : y; }
+
+    public void setY(float y) { position.y = (y < 0) ? 0 : Math.round(y); }
+
+    public void setY(double y) { position.y = (y < 0) ? 0 : Math.round((float) y); }
 
     public void setDX(int dX) { this.dX = dX; }
 
@@ -93,7 +101,7 @@ public abstract class Entity {
 
     /* Methods */
 
-    public abstract void draw(Graphics2D g2d, int x, int y);
+    public abstract void draw(Graphics2D g2d);
 
     public boolean collidesWith(Entity entity) {
         if (this == entity) return false;
