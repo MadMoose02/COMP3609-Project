@@ -1,7 +1,6 @@
 package Entity;
 
 import java.awt.Graphics2D;
-import javax.swing.JPanel;
 import java.awt.Image;
 import Managers.ImageManager;
 
@@ -22,8 +21,8 @@ public abstract class Collectible extends Entity{
     }
 
     @Override
-	public void draw (Graphics2D g2, int x, int y) {
-		g2.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
+	public void draw (Graphics2D g2d, int x, int y) {
+		g2d.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
 	}
 
     public int getWidth() {
