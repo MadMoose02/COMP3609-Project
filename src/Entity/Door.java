@@ -1,28 +1,35 @@
 package Entity;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 public class Door extends Entity{
+    private Player player;
+    private Image spriteImage;
+    private String doorName;
 
-    public Door(int x, int y, int width, int height) {
+    public Door(String doorName, int x, int y, int width, int height, Player player) {
         super(x, y, width, height);
-        //TODO Auto-generated constructor stub
+        this.doorName = doorName;
+        this.player = player;
     }
 
     @Override
-    public void draw(Graphics2D g2d, int x, int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
-    }
+    public void draw (Graphics2D g2, int x, int y) {
+		g2.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
+	}
 
-    public void doorCollision() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doorCollision'");
-    }
+    public boolean collidesWithPlayer () {
+		if (this.collidesWith(player)) {
+            System.out.println("Collided with player");
+            return true;
+        }
+        return false;
+	}
 
-    public void unlockDoor() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'openDoor'");
+    public boolean unlockDoor(Key key) {
+        if (key.getKeyName().equals(this.doorName)) { return true;}
+        else return false;
     }
     
 }
