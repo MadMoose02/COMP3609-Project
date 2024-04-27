@@ -1,7 +1,5 @@
 package Managers;
 
-import java.io.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 import Game.GamePanel;
@@ -16,15 +14,17 @@ import Tile.*;
  */
 public class TileMapManager {
 
-    private GamePanel panel;
-    private ArrayList<Image> tileImages;
-    private static final String MAP_FOLDER = System.getProperty("user.dir") + 
-        File.separator + "assets" + File.separator + "maps";
+    //private GamePanel panel;
+    private TMXReader tmxReader;
+    //private ArrayList<Image> tileImages;
+    //private static final String MAP_FOLDER = System.getProperty("user.dir") + 
+    //    File.separator + "assets" + File.separator + "maps";
 
     public TileMapManager(GamePanel panel) {
         System.out.println("[TILEMAP MANAGER] Initialising");
-	    this.panel = panel;
-        loadTileImages();
+	    //this.panel = panel;
+        this.tmxReader = new TMXReader(panel);
+        //loadTileImages();
         //loadCreatureSprites();
         //loadPowerUpSprites();
     }
@@ -32,6 +32,7 @@ public class TileMapManager {
 
     /* Methods */
 
+    /*
     public TileMap loadMap(String filename) throws IOException {
         System.out.println("[TILEMAP MANAGER] Loading map: " + filename);
         ArrayList<String> lines = new ArrayList<String>();
@@ -69,24 +70,6 @@ public class TileMapManager {
                     Tile newTile = new Tile(tileImages.get(tile), true);
                     newMap.setTile(x, y, newTile);
                 }
-                /*
-                // check if the char represents a sprite
-                else if (ch == 'o') {
-                    addSprite(newMap, coinSprite, x, y);
-                }
-                else if (ch == '!') {
-                    addSprite(newMap, musicSprite, x, y);
-                }
-                else if (ch == '*') {
-                    addSprite(newMap, goalSprite, x, y);
-                }
-                else if (ch == '1') {
-                    addSprite(newMap, grubSprite, x, y);
-                }
-                else if (ch == '2') {
-                    addSprite(newMap, flySprite, x, y);
-                }
-                */
             }
         }
         
@@ -105,6 +88,24 @@ public class TileMapManager {
             if (ch == 'Z') { break; }
             ch++;
         }
+    }
+    */
+
+    public ArrayList<TileMap> loadTileMaps() {
+        String[] mapNames = {
+            "ForestFrenzy", "WinterWasteland", "GraveyardShift", "MysteryCastle"
+        };
+
+        ArrayList<TileMap> maps = new ArrayList<>();
+        for (String mapName : mapNames) {
+            try { 
+                tmxReader.loadTMXTileMap(mapName); 
+                maps.add(tmxReader.getTileMap());
+
+            } catch (Exception e) { e.printStackTrace(); }
+        }
+
+        return maps;
     }
 
 }
