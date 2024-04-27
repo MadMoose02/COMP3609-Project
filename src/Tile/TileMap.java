@@ -124,7 +124,6 @@ public class TileMap {
         int yPos = tilesToPixels(y);
         tile.setPosition(xPos, yPos);
         tiles[x][y] = tile;
-        System.out.println("[TILEMAP] New tile at (" + xPos + "," + yPos + ")");
     }
 
     /**
