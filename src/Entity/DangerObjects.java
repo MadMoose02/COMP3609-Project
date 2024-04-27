@@ -1,24 +1,35 @@
 package Entity;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
+
+import Managers.ImageManager;
 
 public class DangerObjects extends Entity{
+    private Image spriteImage;
+    private Player player;
 
-    public DangerObjects(int x, int y, int width, int height) {
+    public DangerObjects(String imgName, int x, int y, int width, int height, Player player) {
         super(x, y, width, height);
-        //TODO Auto-generated constructor stub
+        this.player = player;   
+
+        setImage(ImageManager.getImage(imgName));
+        setSize(40, 40);
     }
 
     @Override
     public void draw(Graphics2D g2d, int x, int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
+        g2d.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
     }
 
-    public void dangerCollision() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dangerCollision'");
-    }  
+    public boolean collidesWithPlayer () {
+		if (this.collidesWith(player)) {
+            System.out.println("Collided with player");
+            return true;
+        }
+
+        return false;
+	}
     
 }
 
