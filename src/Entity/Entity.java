@@ -101,7 +101,7 @@ public abstract class Entity {
 
     /* Methods */
 
-    public abstract void draw(Graphics2D g2d);
+    public abstract void draw(Graphics2D g2d, int x, int y);
 
     public boolean collidesWith(Entity entity) {
         if (this == entity) return false;
