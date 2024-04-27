@@ -1,9 +1,9 @@
 package Entity;
 
-public class LifePotion extends Collectible{
+public class Life extends Collectible{
     private int numLives;
 
-    public LifePotion(String imgName, int x, int y, int width, int height, Player player) {
+    public Life(String imgName, int x, int y, int width, int height, Player player) {
         super(imgName, x, y, width, height, player);
         this.numLives = 3;
     }
