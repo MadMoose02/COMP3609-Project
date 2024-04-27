@@ -113,7 +113,7 @@ public class Player extends MovingEntity {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d, int x, int y) {
         Image img = getImage();
         for (Animation anim : animations.values()) {
             if (anim.isStillActive()) { img = anim.getImage(); }
@@ -121,7 +121,7 @@ public class Player extends MovingEntity {
 
         // draw player's current image
         g2d.drawImage(
-            img, getX(), getY(),
+            img, x, y,
             img.getWidth(null), 
             img.getHeight(null), 
             null

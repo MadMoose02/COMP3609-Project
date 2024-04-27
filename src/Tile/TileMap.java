@@ -219,7 +219,7 @@ public class TileMap {
         
         // draw the visible tiles
         Tile tile;
-        int firstTileX = pixelsToTiles(-offsetX);
+        int firstTileX = pixelsToTiles(-offsetX );
         int lastTileX = firstTileX + pixelsToTiles(screenSize.width) + 1;
         for (int y = 0; y < mapSize.height; y++) {
             for (int x = firstTileX; x <= lastTileX; x++) {
@@ -229,7 +229,7 @@ public class TileMap {
         }
 
         // draw player
-        player.draw(g2);
+        player.draw(g2, player.getX(), player.getY());
     }
 
     public void update() {
@@ -258,6 +258,7 @@ public class TileMap {
         }
         System.out.println ("[TILEMAP] Collision going right");
         player.setX((int) tilePos.getX() + getTileMapOffsetX() - player.getWidth());
+        
     }
 
     public void jump() {
