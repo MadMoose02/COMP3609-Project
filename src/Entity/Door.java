@@ -15,8 +15,8 @@ public class Door extends Entity{
     }
 
     @Override
-    public void draw (Graphics2D g2, int x, int y) {
-		g2.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
+    public void draw (Graphics2D g2d, int x, int y) {
+		g2d.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
 	}
 
     public boolean collidesWithPlayer () {
