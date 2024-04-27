@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import Tile.*;
 import Entity.*;
@@ -29,7 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player;
 	private TileMapManager tileManager;
-	private TileMap	tileMap;
+	private ArrayList<TileMap> tileMaps;
+    private TileMap tileMap;
 
     private Movement lastMovement;
 	private boolean levelChange;
@@ -42,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
         SaveDataManager.getInstance();
 		isRunning = isPaused = false;
 		image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
-		level = 1;
+		level = 0;
 		levelChange = false;
 	}
 
@@ -78,8 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
 			levelChange = false;
 
 			try {
-				String filename = "map" + level + ".txt";
-				tileMap = tileManager.loadMap(filename) ;
+				tileMap = tileMaps.get(level);
 				int w, h;
 				w = tileMap.getWidth();
 				h = tileMap.getHeight();
@@ -126,9 +127,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 			try {
                 createGameEntities();
-				tileMap = tileManager.loadMap("map1.txt");
-				System.out.println ("[GAMEPANEL] Tilemap Size: " + 
-                    tileMap.getWidth() + " x " + tileMap.getHeight());
+				tileMaps = tileManager.loadTileMaps();
+                tileMap = tileMaps.get(0);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
