@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="512" tileheight="512" infinite="0" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" source="Bricks1.tsx"/>
+ <tileset firstgid="2" source="Bricks1BG.tsx"/>
+ <tileset firstgid="3" source="Bricks2.tsx"/>
+ <tileset firstgid="4" source="Bricks2BG.tsx"/>
+ <tileset firstgid="5" source="Bricks3.tsx"/>
+ <tileset firstgid="6" source="Bricks3BG.tsx"/>
+ <tileset firstgid="7" source="Bricks4.tsx"/>
+ <tileset firstgid="8" source="Bricks4BG.tsx"/>
+ <tileset firstgid="9" source="Platform1.tsx"/>
+ <tileset firstgid="10" source="Platform2.tsx"/>
+ <tileset firstgid="11" source="ladder.tsx"/>
+ <tileset firstgid="12" source="Door7.tsx"/>
+ <tileset firstgid="13" source="Door1.tsx"/>
+ <tileset firstgid="14" source="Door2.tsx"/>
+ <tileset firstgid="15" source="Door6.tsx"/>
+ <tileset firstgid="16" source="Door4.tsx"/>
+ <tileset firstgid="17" source="ShelfWithBooks.tsx"/>
+ <tileset firstgid="18" source="Chair1LEFT.tsx"/>
+ <tileset firstgid="19" source="Chair1RIGHT.tsx"/>
+ <tileset firstgid="20" name="Flag4" tilewidth="340" tileheight="447" tilecount="1" columns="1">
+  <image source="Assets/Props/Flags/Flag4.png" width="340" height="447"/>
+ </tileset>
+ <tileset firstgid="21" name="Flag5" tilewidth="340" tileheight="447" tilecount="1" columns="1">
+  <image source="Assets/Props/Flags/Flag5.png" width="340" height="447"/>
+ </tileset>
+ <tileset firstgid="22" name="Flag1" tilewidth="340" tileheight="447" tilecount="1" columns="1">
+  <image source="Assets/Props/Flags/Flag1.png" width="340" height="447"/>
+ </tileset>
+ <tileset firstgid="23" name="Flag2" tilewidth="340" tileheight="447" tilecount="1" columns="1">
+  <image source="Assets/Props/Flags/Flag2.png" width="340" height="447"/>
+ </tileset>
+ <tileset firstgid="24" name="Flag3" tilewidth="340" tileheight="447" tilecount="1" columns="1">
+  <image source="Assets/Props/Flags/Flag3.png" width="340" height="447"/>
+ </tileset>
+ <tileset firstgid="25" name="knightline1" tilewidth="449" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Enemy/knightline1.png" width="449" height="512"/>
+ </tileset>
+ <tileset firstgid="26" name="knightline1" tilewidth="898" tileheight="1024" tilecount="0" columns="0">
+  <image source="Assets/Enemy/knightline1.png" width="449" height="512"/>
+ </tileset>
+ <tileset firstgid="26" name="knightline1" tilewidth="512" tileheight="512" tilecount="0" columns="0">
+  <image source="Assets/Enemy/knightline1.png" width="449" height="512"/>
+ </tileset>
+ <tileset firstgid="26" name="knightline1" tilewidth="898" tileheight="1024" tilecount="0" columns="0">
+  <image source="Assets/Enemy/knightline1.png" width="449" height="512"/>
+ </tileset>
+ <tileset firstgid="26" name="knightline1" tilewidth="449" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Enemy/knightline1.png" width="449" height="512"/>
+ </tileset>
+ <tileset firstgid="27" name="Chair1RIGHT" tilewidth="512" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Furniture/Chair1RIGHT.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="28" name="Table" tilewidth="400" tileheight="400" tilecount="1" columns="1">
+  <image source="Assets/Props/Furniture/Table.png" width="400" height="400"/>
+ </tileset>
+ <tileset firstgid="29" name="Chair1LEFT" tilewidth="512" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Furniture/Chair1LEFT.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="30" name="AxeWoodLong" tilewidth="325" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Weapons/AxeWoodLong.png" width="325" height="512"/>
+ </tileset>
+ <tileset firstgid="31" name="AxeChainLong" tilewidth="325" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Weapons/AxeChainLong.png" width="325" height="512"/>
+ </tileset>
+ <tileset firstgid="32" name="RackWithSword" tilewidth="414" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Weapons/RackWithSword.png" width="414" height="512"/>
+ </tileset>
+ <tileset firstgid="33" name="Lantern" tilewidth="94" tileheight="163" tilecount="9" columns="3">
+  <image source="Assets/Props/Decor/Lantern.png" width="295" height="512"/>
+ </tileset>
+ <tileset firstgid="42" name="Lantern" tilewidth="295" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Lantern.png" width="295" height="512"/>
+ </tileset>
+ <tileset firstgid="43" name="Shackles" tilewidth="392" tileheight="400" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Shackles.png" width="392" height="400"/>
+ </tileset>
+ <tileset firstgid="44" name="Books1" tilewidth="487" tileheight="400" tilecount="0" columns="0">
+  <image source="Assets/Props/Decor/Books1.png" width="300" height="247"/>
+ </tileset>
+ <tileset firstgid="44" name="Books1" tilewidth="400" tileheight="329" tilecount="0" columns="0">
+  <image source="Assets/Props/Decor/Books1.png" width="300" height="247"/>
+ </tileset>
+ <tileset firstgid="44" name="Books1" tilewidth="300" tileheight="247" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Books1.png" width="300" height="247"/>
+ </tileset>
+ <tileset firstgid="45" name="Books2" tilewidth="200" tileheight="123" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Books2.png" width="200" height="123"/>
+ </tileset>
+ <tileset firstgid="46" name="Books2_1" tilewidth="200" tileheight="123" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Books2_1.png" width="200" height="123"/>
+ </tileset>
+ <tileset firstgid="47" name="Candlestick" tilewidth="522" tileheight="400" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Candlestick.png" width="522" height="400"/>
+ </tileset>
+ <tileset firstgid="48" name="Chain" tilewidth="118" tileheight="400" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Chain.png" width="188" height="400"/>
+ </tileset>
+ <tileset firstgid="49" name="Chain" tilewidth="188" tileheight="400" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Chain.png" width="188" height="400"/>
+ </tileset>
+ <tileset firstgid="50" name="Chandelier" tilewidth="564" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/Chandelier.png" width="564" height="512"/>
+ </tileset>
+ <tileset firstgid="51" name="Web4" tilewidth="286" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Spooky/Web4.png" width="286" height="512"/>
+ </tileset>
+ <tileset firstgid="52" name="Skull" tilewidth="246" tileheight="250" tilecount="1" columns="1">
+  <image source="Assets/Props/Spooky/Skull.png" width="246" height="250"/>
+ </tileset>
+ <tileset firstgid="53" name="SkullWithEyes" tilewidth="444" tileheight="450" tilecount="1" columns="1">
+  <image source="Assets/Enemy/SkullWithEyes.png" width="444" height="450"/>
+ </tileset>
+ <tileset firstgid="54" name="Web1" tilewidth="457" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Spooky/Web1.png" width="457" height="512"/>
+ </tileset>
+ <tileset firstgid="55" name="Bone" tilewidth="455" tileheight="250" tilecount="1" columns="1">
+  <image source="Assets/Props/Spooky/Bone.png" width="455" height="250"/>
+ </tileset>
+ <tileset firstgid="56" name="Coin 1" tilewidth="275" tileheight="275" tilecount="1" columns="1">
+  <image source="Assets/Currency/Coin 1.png" width="275" height="275"/>
+ </tileset>
+ <tileset firstgid="57" name="Spider Eggs" tilewidth="512" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Enemy/Spider Eggs.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="58" name="Single bat" tilewidth="512" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Enemy/Single bat.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="59" name="Ghost Silhoute" tilewidth="512" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Enemy/Ghost Silhoute.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="60" name="Hp Potion" tilewidth="450" tileheight="450" tilecount="0" columns="0">
+  <image source="Assets/Props/Potions/Hp Potion.png" width="300" height="300"/>
+ </tileset>
+ <tileset firstgid="60" name="MP Potion" tilewidth="450" tileheight="450" tilecount="0" columns="0">
+  <image source="Assets/Props/Potions/MP Potion.png" width="300" height="300"/>
+ </tileset>
+ <tileset firstgid="60" name="Hp Potion" tilewidth="300" tileheight="300" tilecount="1" columns="1">
+  <image source="Assets/Props/Potions/Hp Potion.png" width="300" height="300"/>
+ </tileset>
+ <tileset firstgid="61" name="MP Potion" tilewidth="300" tileheight="300" tilecount="1" columns="1">
+  <image source="Assets/Props/Potions/MP Potion.png" width="300" height="300"/>
+ </tileset>
+ <tileset firstgid="62" name="keys-03" tilewidth="512" tileheight="384" tilecount="1" columns="1">
+  <image source="Assets/Keys/keys-03.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="63" name="keys-01" tilewidth="512" tileheight="384" tilecount="1" columns="1">
+  <image source="Assets/Keys/keys-01.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="64" name="keys-06" tilewidth="512" tileheight="384" tilecount="1" columns="1">
+  <image source="Assets/Keys/keys-06.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="65" name="Key" tilewidth="450" tileheight="450" tilecount="1" columns="1">
+  <image source="Assets/Keys/Key.png" width="450" height="450"/>
+ </tileset>
+ <tileset firstgid="66" name="keys-05" tilewidth="512" tileheight="384" tilecount="1" columns="1">
+  <image source="Assets/Keys/keys-05.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="67" name="keys-02" tilewidth="512" tileheight="384" tilecount="1" columns="1">
+  <image source="Assets/Keys/keys-02.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="68" name="SOS" tilewidth="512" tileheight="512" tilecount="1" columns="1">
+  <image source="Assets/Props/Decor/SOS.png" width="512" height="512"/>
+ </tileset>
+ <layer id="1" name="Terrain" width="30" height="20">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,5,1,1,1,5,1,1,1,5,1,1,1,1,5,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,3,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,5,1,1,5,1,5,3,1,3,1,1,3,1,
+1,0,0,1,1,1,1,1,1,5,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,
+1,0,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,0,0,0,0,0,1,0,0,0,1,3,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,
+1,1,3,1,3,1,1,0,0,0,5,8,8,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,
+1,0,0,0,0,0,0,0,0,0,1,8,8,8,8,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,
+1,0,0,0,0,0,0,0,0,0,1,8,8,8,8,1,1,1,1,5,1,1,0,0,0,0,0,0,0,0,
+1,0,0,0,0,5,1,5,1,1,5,1,1,5,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,7,7,7,7,3,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+1,0,0,0,0,1,1,5,5,1,1,5,1,1,1,5,1,5,1,5,1,1,1,1,1,0,0,0,0,0,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,
+1,0,0,0,0,0,0,0,10,10,7,1,1,1,7,0,0,0,0,11,1,0,0,0,0,0,0,0,11,0,
+1,0,0,0,0,0,10,10,1,1,1,1,7,1,1,1,10,0,10,7,7,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,1,1,1,6,1,0,0,0,0,0,1,1,7,1,1,0,0,0,0,0,0,0,0,1,
+1,1,7,1,7,1,1,6,6,6,1,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,1,
+6,6,6,6,6,6,6,6,8,6,1,1,1,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+8,8,8,8,8,8,8,8,8,6,6,6,1,1,1,7,7,7,7,7,10,0,0,10,1,1,1,1,1,1
+</data>
+ </layer>
+ <layer id="2" name="Interactive" width="30" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,11,0,0,53,0,0,0,62,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,
+0,11,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,11,0,58,0,58,58,0,0,0,63,
+0,11,0,0,30,30,0,0,0,11,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,14,0,0,
+0,11,0,13,66,56,0,0,0,11,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,56,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,0,0,0,0,0,0,0,0,0,
+0,11,0,0,0,0,0,65,14,0,0,61,0,0,16,0,59,0,0,0,0,0,0,61,0,0,0,0,11,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,11,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,11,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,56,26,0,0,0,0,0,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,57,0,0,0,0,0,0,0,11,0,0,0,0,
+0,11,0,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,56,67,0,0,0,31,0,0,0,0,56,0,0,0,11,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,11,0,0,0,12,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,57,57,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Objects" width="30" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,22,20,21,23,24,42,0,0,0,0,0,0,
+0,0,32,0,0,0,0,47,0,0,0,0,17,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,45,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,62,51,0,
+0,0,0,67,0,0,0,54,0,0,0,0,32,0,0,0,0,47,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,52,0,0,0,0,44,0,0,0,0,0,54,0,42,21,23,24,42,0,
+0,42,22,20,42,0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,17,46,0,0,0,0,0,0,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,66,0,0,0,0,0,0,0,0,0,0,43,0,0,0,0,0,29,28,19,0,0,
+0,0,0,0,0,0,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,0,0,
+0,0,0,0,0,0,0,0,42,0,0,0,0,0,0,0,0,0,42,0,0,51,0,0,0,0,47,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,0,0,0,17,45,0,0,0,0,0,0,0,
+0,0,0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,32,0,0,0,0,0,51,0,0,0,0,0,0,0,0,0,51,0,0,0,0,0,42,0,0,
+0,0,0,0,0,0,0,0,0,52,0,32,0,0,43,0,0,0,63,0,0,0,43,0,0,0,0,0,68,65,
+0,52,0,0,0,0,0,0,0,0,0,0,0,0,0,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,55,0,0,0,0,0,0,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>
