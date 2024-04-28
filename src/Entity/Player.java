@@ -5,6 +5,7 @@ package Entity;
  */
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -33,8 +34,18 @@ public class Player extends MovingEntity {
     private boolean facingLeft;
     /** True if player is crouching, false if standing */
     private boolean crouching;
+    /** True if player is falling, false if not */
     private boolean falling;
+    /** True if player is jumping, false if not */
     private boolean jumping;
+    /** True if player is climbing upwards, false if not */
+    private boolean climbingUp;
+    /** True if player is climbing downwards, false if not */
+    private boolean climbingDown;
+    /** Player's health */
+    private int health;
+    /** Player's maximum health */
+    private int maxHealth;
     /** Collection of all player animations */
     private HashMap<String, Animation> animations;
 
@@ -42,6 +53,8 @@ public class Player extends MovingEntity {
     public Player() {
         super(0, 0, 0, 0);
         tileMap = null;
+        health = maxHealth = 4;
+        climbingUp = climbingDown = false;
         facingLeft = crouching = false;
         initialVelocity = timeElapsed = 0;
         setSize(60);
@@ -51,7 +64,138 @@ public class Player extends MovingEntity {
         setImage(ImageManager.getImage("player_idle_right_1"));
     }
 
+
+    /* Accessors */
+
+    /**
+     * Returns the player's current health
+     *  
+     * @return the player's current health
+     */
+    public int getHealth() { return health; }
+
+    /**
+     * Returns the player's maximum health
+     * 
+     * @return the player's maximum health
+     */
+    public int getMaxHealth() { return maxHealth; }
+
+    /**
+     * Checks if the player is currently in the process of crouching
+     * 
+     * @return {@code true} if the player is crouching, {@code false} otherwise
+     */
+    public boolean isCrouching() { return crouching; }
+
+    /**
+     * Checks if the player is currently in the process of jumping
+     * 
+     * @return {@code true} if the player is jumping, {@code false} otherwise
+     */
+    public boolean isJumping() { return jumping; }
+    
+    /**
+     * Checks if the player is currently in the process of falling
+     * 
+     * @return {@code true} if the player is falling, {@code false} otherwise
+     */
+    public boolean isFalling() { return falling; }
+
+    /**
+     * Checks if the player is currently in the process of climbing up
+     * 
+     * @return {@code true} if the player is climbing up, {@code false} otherwise
+     */
+    public boolean isClimbingUp() { return climbingUp; }
+
+    /**
+     * Checks if the player is currently in the process of climbing down
+     * 
+     * @return {@code true} if the player is climbing down, {@code false} otherwise
+     */
+    public boolean isClimbingDown() { return climbingDown; }
+    
+    /**
+     * Checks if any of the player's walk animations are currently active
+     * 
+     * @return {@code true} if the player is walking, {@code false} otherwise
+     */
+    public boolean isWalking() { 
+        return animations.get("walk_left").isStillActive() ||
+                animations.get("walk_right").isStillActive() ||
+                animations.get("crouch_left").isStillActive() ||
+                animations.get("crouch_right").isStillActive();
+    }
+
+    /**
+     * Checks if any of the player's turn animations are currently active
+     * 
+     * @return {@code true} if the player is turning, {@code false} otherwise
+     */
+    public boolean isTurning() { 
+        return animations.get("turn_left").isStillActive() || 
+                animations.get("turn_right").isStillActive(); 
+    }
+
+    /**
+     * Checks if the player is in the air. At least half of the player's width must not
+     * collide with a tile to be considered in the air.
+     * 
+     * @return {@code true} if the player is in the air, {@code false} otherwise
+     */
+    public boolean isInAir() {
+        int x = getX() + tileMap.getTileMapOffsetX() + (getWidth()/2);
+        int y = getY() + tileMap.getTileMapOffsetY() + getHeight();
+        if (tileMap.collidesWithTileCoords(x, y) == null) { return true; }
+        return false;
+    }
+
+    private boolean isOnLadder() {
+        int x = getX() + (getWidth()/2);
+        int y = getY() + (getHeight()/2);
+        ArrayList<Tile> tiles = tileMap.getTilesAtLocation(x, y);
+        if (tiles == null) { return false; }
+        for (Tile t : tiles) {
+            if (t.getName().contains("ladder")) { return true; }
+        }
+        return false;
+    }
+
+    private boolean isAboveLadder() {
+        int x = getX() + (getWidth()/2);
+        int y = getY() + getHeight();
+        ArrayList<Tile> tiles = tileMap.getTilesAtLocation(x, y);
+        if (tiles == null) { return false; }
+        for (Tile t : tiles) {
+            System.out.println(t.getName());
+            if (t.getName().contains("ladder")) { return true; }
+        }
+        return false;
+    }
+
+
+    /* Mutators */
+    
+    /**
+     * Sets the player's health. If the health is greater than the maximum health, the
+     * health is defaulted to the maximum health
+     * 
+     * @param health the player's new health value
+     */
+    public void setHealth(int health) { 
+        this.health = (health > maxHealth ? maxHealth : (health < 0 ? 0 : health));
+    }
+
+    /**
+     * Sets the player's reference to the current tile map
+     *  
+     * @param tileMap the active tile map
+     */
     public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
+
+
+    /* Methods */
 
     @Override
     public synchronized void move(Movement direction) {
@@ -72,10 +216,12 @@ public class Player extends MovingEntity {
 
             case CROUCH:
                 crouch();
+                climbDown();
                 break;
 
             case STAND:
                 stand();
+                climbUp();
                 break;
 
             default:
@@ -84,16 +230,68 @@ public class Player extends MovingEntity {
         }
     }
 
+    /**
+     * Updates the player's position and animation
+     */
     @Override
     public void update() {
+
+        // Fix player clipping with ground
+        ArrayList<Tile> collidedTiles = tileMap.getTilesAtLocation(getX() + getWidth() / 2, getY() + getHeight());
+        if (collidedTiles != null && collidedTiles.size() > 0) {
+            Tile solidTile = null;
+            for (Tile t : collidedTiles) {
+                if (t.isSolid()) { solidTile = t; }
+            }
+            if (solidTile != null) {
+                setY(solidTile.getY() - getHeight());
+            }
+        }
         
         // Update all active animations
         for (Animation anim : animations.values()) { anim.update(); }
         
         // If the player is in freefall (in air but not jumping), fall down
-        if (isInAir()) { fall(); } else { 
+        if (isInAir() && !(isClimbingUp() || isClimbingDown())) { fall(); } else { 
             jumping = falling = false; 
             if (!isCrouching()) stand();
+        }
+
+        // if the player is on a ladder, center on the ladder
+        if ((isClimbingDown() || isClimbingUp()) && isOnLadder()) { 
+            int x = TileMap.pixelsToTiles(getX() + tileMap.getTileMapOffsetX() + (getWidth()/2));
+            setX(TileMap.tilesToPixels(x) + getWidth());
+        }
+
+        // if the player is climbing up or down but is not on a ladder, stop climbing
+        if (isClimbingUp() || isClimbingDown()) {
+            if (!isOnLadder()) { climbingDown = climbingUp = false; }
+        }
+
+        // if there is a solid tile under the player, stop climbing down
+        if (isClimbingDown()) {
+            Tile solidTile = tileMap.collidesWithTileCoords(getX() + getWidth() / 2, getY() + getHeight());
+            if (solidTile != null) {
+                climbingDown = false;
+                setY(solidTile.getY() - getHeight());
+                stand();
+            }
+        }
+
+        // if at least half of the player's height is above a solid tile, stop climbing up
+        if (isClimbingUp()) {
+            ArrayList<Tile> above = tileMap.getTilesAtLocation(getX() + getWidth() / 2, getY() - 1);
+            if (above == null || above.size() == 0) { 
+                Tile solidTile = null;
+                for (Tile t : above) {
+                    if (t.isSolid()) { solidTile = t; }
+                }
+                if (solidTile != null && getY() - solidTile.getY() > getHeight() / 2) {
+                    climbingUp = false;
+                    stand();
+                    setY(solidTile.getY());
+                }
+            }
         }
         
         // Calculate the distance travelled since the last update
@@ -154,48 +352,6 @@ public class Player extends MovingEntity {
             System.out.println("[PLAYER] Loaded animation: " + anim.getName());
         }
     }
-
-    private boolean isCrouching() { return crouching; }
-
-    private boolean isJumping() { return jumping; }
-    
-    private boolean isFalling() { return falling; }
-    
-    private boolean isWalking() { 
-        return animations.get("walk_left").isStillActive() ||
-                animations.get("walk_right").isStillActive() ||
-                animations.get("crouch_left").isStillActive() ||
-                animations.get("crouch_right").isStillActive();
-    }
-
-    private boolean isTurning() { 
-        return animations.get("turn_left").isStillActive() || 
-                animations.get("turn_right").isStillActive(); 
-    }
-
-    /**
-     * Checks if the player is in the air. At least half of the player's width must not
-     * collide with a tile to be considered in the air.
-     * 
-     * @return {@code true} if the player is in the air, {@code false} otherwise
-     */
-    public boolean isInAir() {
-        int x = getX() + tileMap.getTileMapOffsetX() + (getWidth()/2);
-        int y = getY() + tileMap.getTileMapOffsetY() + getHeight();
-        if (tileMap.collidesWithTileCoords(x, y) == null) { return true; }
-        return false;
-    }
-    
-    private void turnAround() {
-        if (isTurning() || isCrouching()) { return; }
-        facingLeft = !facingLeft;
-        if (isInAir()) { return; }
-        animations.get((facingLeft) ? "turn_left" : "turn_right").start(); 
-        setImage(ImageManager.getImage((facingLeft) ? 
-            (crouching ? "player_crouch_left_1" : "player_idle_left_1") : 
-            (crouching ? "player_crouch_right_1" : "player_idle_right_1")
-        ));
-    }
     
     private void doWalkAnimation() {
         if (isWalking() || isInAir()) { return; }
@@ -235,7 +391,25 @@ public class Player extends MovingEntity {
         else { animations.get("crouch_right").start(); }
     }
 
+    private void doClimbAnimation() {
+        if (animations.get("climb_up").isStillActive() || 
+            animations.get("climb_down").isStillActive()) { return; }
+        animations.get("climb_" + (isClimbingUp() ? "up" : "down")).start();
+    }
+
+    private void turnAround() {
+        if (isTurning() || isCrouching()) { return; }
+        facingLeft = !facingLeft;
+        if (isInAir()) { return; }
+        animations.get((facingLeft) ? "turn_left" : "turn_right").start(); 
+        setImage(ImageManager.getImage((facingLeft) ? 
+            (crouching ? "player_crouch_left_1" : "player_idle_left_1") : 
+            (crouching ? "player_crouch_right_1" : "player_idle_right_1")
+        ));
+    }
+
     private void moveLeft() {
+        if (isClimbingUp() || isClimbingDown()) { return; }
         if (!facingLeft) {
             turnAround();
             return;
@@ -245,6 +419,7 @@ public class Player extends MovingEntity {
     }
 
     private void moveRight() {
+        if (isClimbingUp() || isClimbingDown()) { return; }
         if (facingLeft) {
             turnAround();
             return;
@@ -265,7 +440,7 @@ public class Player extends MovingEntity {
 
     public void jump() {  
         if (isFalling() || isJumping()) { return; }
-        if (isCrouching()) { 
+        if (isCrouching()) {
             stand(); 
             return;
         }
@@ -281,20 +456,56 @@ public class Player extends MovingEntity {
 
     public void crouch() {
         if (isCrouching()) { return; }
-        crouching = true;
         int lastHeight = getHeight();
         if (facingLeft) { setImage(ImageManager.getImage("player_crouch_left_1")); }
         else { setImage(ImageManager.getImage("player_crouch_right_1")); }
-        setY(getY() + (lastHeight - getHeight()));
+        if (!crouching) {
+            crouching = true;
+            setY(getY() + (lastHeight - getHeight()));
+        }
         doCrouchAnimation();
     }
     
     public void stand() {
-        crouching = false;
+        if (isClimbingUp()) { return; }
         int lastHeight = getHeight();
         if (facingLeft) { setImage(ImageManager.getImage("player_idle_left_1")); }
         else { setImage(ImageManager.getImage("player_idle_right_1")); }
-        setY(getY() - (getHeight() - lastHeight));
+        if (crouching) {
+            crouching = false;
+            setY(getY() - (getHeight() - lastHeight));
+        }
     }
 
+    public void climbUp() {
+        if (!isClimbingUp()) {
+            if (isOnLadder()) { climbingUp = true; }
+            if (!climbingUp) { return; }
+            setImage(ImageManager.getImage("player_climb_up_1"));
+        }
+        setY(getY() - getDY() * 2);
+        if (animations.get("climb_up").isStillActive()) { return; }
+        doClimbAnimation();
+    }
+
+    public void climbDown() {
+        if (!isClimbingDown()) {
+            if (isAboveLadder()) { climbingDown = true; }
+            if (!climbingDown) { return; }
+            setImage(ImageManager.getImage("player_climb_down_1"));
+
+            // position player on ladder
+            ArrayList<Tile> tiles = tileMap.getTilesAtLocation(getX() + getWidth()/2, getY() + getHeight() + 10);
+            for (Tile t : tiles) {
+                if (t.getName().contains("ladder")) {
+                    setY(t.getY());
+                    setX(t.getX());
+                    break;
+                }
+            }
+        }
+        setY(getY() + getDY() * 2);
+        if (animations.get("climb_down").isStillActive()) { return; }
+        doClimbAnimation();
+    }
 }
