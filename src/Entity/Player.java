@@ -145,8 +145,8 @@ public class Player extends MovingEntity {
      * @return {@code true} if the player is in the air, {@code false} otherwise
      */
     public boolean isInAir() {
-        int x = getX() + tileMap.getTileMapOffsetX() + (getWidth()/2);
-        int y = getY() + tileMap.getTileMapOffsetY() + getHeight();
+        int x = getX() + (getWidth()/2);
+        int y = getY() + getHeight();
         if (tileMap.collidesWithTileCoords(x, y) == null) { return true; }
         return false;
     }
@@ -164,11 +164,10 @@ public class Player extends MovingEntity {
 
     private boolean isAboveLadder() {
         int x = getX() + (getWidth()/2);
-        int y = getY() + getHeight();
+        int y = getY() + getHeight() + 1;
         ArrayList<Tile> tiles = tileMap.getTilesAtLocation(x, y);
         if (tiles == null) { return false; }
         for (Tile t : tiles) {
-            System.out.println(t.getName());
             if (t.getName().contains("ladder")) { return true; }
         }
         return false;
@@ -235,6 +234,9 @@ public class Player extends MovingEntity {
      */
     @Override
     public void update() {
+        if (getX() > tileMap.getWidthPixels() - getWidth()) {
+            setX(tileMap.getWidthPixels() - getWidth());
+        }
 
         // Fix player clipping with ground
         ArrayList<Tile> collidedTiles = tileMap.getTilesAtLocation(getX() + getWidth() / 2, getY() + getHeight());
@@ -259,7 +261,7 @@ public class Player extends MovingEntity {
 
         // if the player is on a ladder, center on the ladder
         if ((isClimbingDown() || isClimbingUp()) && isOnLadder()) { 
-            int x = TileMap.pixelsToTiles(getX() + tileMap.getTileMapOffsetX() + (getWidth()/2));
+            int x = TileMap.pixelsToTiles(getX() + (getWidth()/2));
             setX(TileMap.tilesToPixels(x) + getWidth());
         }
 
@@ -303,7 +305,7 @@ public class Player extends MovingEntity {
         if (isJumping()) {
             initialVelocity -= 4.9 * timeElapsed;
             setY(jumpHeightStart - distance);
-            setX(getX() + (facingLeft ? -(getDX()) : getDX()) * 0.15);
+            setX(getX() + (facingLeft ? -(getDX()) : getDX()) * 0.1001);
         }
         
         if (isFalling()) {
@@ -445,7 +447,7 @@ public class Player extends MovingEntity {
             return;
         }
         jumping = true;
-        initialVelocity = 370;
+        initialVelocity = 400;
         timeElapsed = 0;
         timeStarted = System.currentTimeMillis();
         jumpHeightStart = getY();
@@ -483,7 +485,7 @@ public class Player extends MovingEntity {
             if (!climbingUp) { return; }
             setImage(ImageManager.getImage("player_climb_up_1"));
         }
-        setY(getY() - getDY() * 2);
+        setY(getY() - (getDY() * 2));
         if (animations.get("climb_up").isStillActive()) { return; }
         doClimbAnimation();
     }
@@ -498,14 +500,14 @@ public class Player extends MovingEntity {
             ArrayList<Tile> tiles = tileMap.getTilesAtLocation(getX() + getWidth()/2, getY() + getHeight() + 10);
             for (Tile t : tiles) {
                 if (t.getName().contains("ladder")) {
-                    setY(t.getY());
-                    setX(t.getX());
+                    setY(getY() + getHeight());
                     break;
                 }
             }
         }
-        setY(getY() + getDY() * 2);
+        setY(getY() + (getDY() * 2));
         if (animations.get("climb_down").isStillActive()) { return; }
         doClimbAnimation();
     }
+
 }
