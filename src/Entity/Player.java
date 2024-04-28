@@ -39,9 +39,9 @@ public class Player extends MovingEntity {
     private HashMap<String, Animation> animations;
 
 
-    public Player(TileMap t) {
+    public Player() {
         super(0, 0, 0, 0);
-        tileMap = t;
+        tileMap = null;
         facingLeft = crouching = false;
         initialVelocity = timeElapsed = 0;
         setSize(60);
@@ -50,6 +50,8 @@ public class Player extends MovingEntity {
         loadPlayerAnimations();
         setImage(ImageManager.getImage("player_idle_right_1"));
     }
+
+    public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
 
     @Override
     public synchronized void move(Movement direction) {
@@ -103,7 +105,7 @@ public class Player extends MovingEntity {
         if (isJumping()) {
             initialVelocity -= 4.9 * timeElapsed;
             setY(jumpHeightStart - distance);
-            setX(getX() + (facingLeft ? -(getDX()) : getDX()) * 0.2);
+            setX(getX() + (facingLeft ? -(getDX()) : getDX()) * 0.15);
         }
         
         if (isFalling()) {
@@ -128,9 +130,11 @@ public class Player extends MovingEntity {
         );
 
         // draw player hitbox with coordinates
-        g2d.setColor(Color.BLACK);
-        g2d.drawString("(" + getX() + ", " + getY() + ")", getX(), getY() - 10);
-        g2d.drawRect(getX(), getY(), getWidth(), getHeight());
+        g2d.setColor(Color.RED);
+        g2d.drawString("(" + x + ", " + y + ")", x, y - 22);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("(" + getX() + ", " + getY() + ")", x, y - 10);
+        g2d.drawRect(x, y, getWidth(), getHeight());
     }
 
     private void loadPlayerAnimations() {
@@ -176,7 +180,9 @@ public class Player extends MovingEntity {
      * @return {@code true} if the player is in the air, {@code false} otherwise
      */
     public boolean isInAir() {
-        if (tileMap.collidesWithTile(getX() + (getWidth()/2), getY() + getHeight()) == null) { return true; }
+        int x = getX() + tileMap.getTileMapOffsetX() + (getWidth()/2);
+        int y = getY() + tileMap.getTileMapOffsetY() + getHeight();
+        if (tileMap.collidesWithTileCoords(x, y) == null) { return true; }
         return false;
     }
     
@@ -189,7 +195,6 @@ public class Player extends MovingEntity {
             (crouching ? "player_crouch_left_1" : "player_idle_left_1") : 
             (crouching ? "player_crouch_right_1" : "player_idle_right_1")
         ));
-
     }
     
     private void doWalkAnimation() {
@@ -265,7 +270,7 @@ public class Player extends MovingEntity {
             return;
         }
         jumping = true;
-        initialVelocity = 350;
+        initialVelocity = 370;
         timeElapsed = 0;
         timeStarted = System.currentTimeMillis();
         jumpHeightStart = getY();

@@ -1,57 +1,41 @@
 package Tile;
 
+/**
+ * TileMap.java <hr>
+ * The TileMap class contains the data for a tile-based map, including Sprites. 
+ * Each tile is a reference to an Image. Images are used multiple times in the tile map.
+ */
+
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.ArrayList;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import Game.*;
 import Entity.*;
 import Managers.*;
 
-/**
-    The TileMap class contains the data for a tile-based
-    map, including Sprites. Each tile is a reference to an
-    Image. Images are used multiple times in the tile map.
-    map.
-*/
-
 public class TileMap {
 
-    private Tile[][] tiles;
+    private BackgroundManager bgManager;
+    private HashMap<String, TileLayer> tileLayers;
     private Dimension screenSize;
     private Dimension mapSize;
     private int tilemapOffsetY;
-    private BackgroundManager bgManager;
     private ArrayList<Entity> entities;
     private Player player;
 
-    /**
-        Creates a new TileMap with the specified width and
-        height (in number of tiles) of the map.
-    */
-    public TileMap(GamePanel panel, int width, int height) {
+    public TileMap(GamePanel panel, Player player, BackgroundManager bgManager, int width, int height) {
         screenSize = new Dimension(panel.getSize().width, panel.getSize().height);
         mapSize = new Dimension(width, height);
-        tilemapOffsetY = screenSize.height - tilesToPixels(mapSize.height);
-        System.out.println("[TILEMAP] Map size: " + mapSize.width + "x" + mapSize.height);
+        tilemapOffsetY = Math.max(0, screenSize.height - tilesToPixels(mapSize.height));
         System.out.println("[TILEMAP] tilemapOffsetY: " + tilemapOffsetY);
-        bgManager = new BackgroundManager(panel, 12);
         entities = new ArrayList<Entity>();
-        tiles = new Tile[mapSize.width][mapSize.height];
+        tileLayers = new HashMap<String, TileLayer>();
+        this.player = player;
+        this.bgManager = bgManager;
         setupEntities();
-        System.out.println("[TILEMAP] Player spawned @ (" + player.getX() + "," + player.getY() + ")");
-    }
-    
-    
-    private void setupEntities() {
-        player = new Player(this);
-        int x = GamePanel.TILE_SIZE * 4;
-        int y = tilemapOffsetY;
-        player.setPosition(x, y);
-
-        // Add to entity list
-        entities.add(player);
     }
 
 
@@ -79,10 +63,14 @@ public class TileMap {
     public int getHeight() { return mapSize.height; }
 
 
-    public int getTileMapOffsetY() { return tilemapOffsetY; }
+    public int getTileMapOffsetY() { 
+        int offsetY = screenSize.height / 2 - Math.round(player.getY()) - player.getHeight();
+        offsetY = Math.min(offsetY, 0);
+        return Math.max(offsetY, screenSize.height - tilesToPixels(mapSize.height));
+    }
 
     public int getTileMapOffsetX() {
-        int offsetX = screenSize.width / 2 - Math.round(player.getX()) - GamePanel.TILE_SIZE;
+        int offsetX = screenSize.width / 2 - Math.round(player.getX()) - player.getWidth();
         offsetX = Math.min(offsetX, 0);
         return Math.max(offsetX, screenSize.width - tilesToPixels(mapSize.width));
     }
@@ -90,14 +78,43 @@ public class TileMap {
     /**
      * Gets the tile at the specified location (in number of tiles).
      * 
-     * @param x col number of the tile
-     * @param y row number of the tile
-     * @return  The tile object at the location, or null if no tile is at the location or 
-     *          the location is out of bounds.
+     * @param col col number of the tile
+     * @param row row number of the tile
+     * @return    The tile object at the location, or null if no tile is at the location or 
+     *            the location is out of bounds.
      */
-    public Tile getTile(int x, int y) {
-        if (x < 0 || x >= mapSize.width || y < 0 || y >= mapSize.height) { return null; }
-        return tiles[x][y];
+    public ArrayList<Tile> getTiles(int col, int row) {
+        if (col < 0 || col >= mapSize.width || row < 0 || row >= mapSize.height) { return null; }
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        for (TileLayer layer : tileLayers.values()) {
+            if (layer.getTile(col, row) == null) { continue; } 
+            tiles.add(layer.getTile(col, row));
+        }
+        return tiles;
+    }
+
+    /**
+     * Gets the tile layer with the specified name.
+     * 
+     * @param layerName The name of the layer
+     * @return          The layer object if it exists, or null if it doesn't
+     */
+    public TileLayer getLayer(String layerName) { return tileLayers.get(layerName); }
+
+    /**
+     * Gets the tile at the specified location (in number of tiles) 
+     * from the specified layer.
+     * 
+     * @param layerName The name of the layer
+     * @param col       The col number of the tile
+     * @param row       The row number of the tile
+     * @return          The tile object at the location, or null if no tile is at the location or
+     *                  the location is out of bounds.
+     */
+    public Tile getLayerTile(String layerName, int col, int row) {
+        if (!tileLayers.containsKey(layerName)) { return null; }
+        if (col < 0 || col >= mapSize.width || row < 0 || row >= mapSize.height) { return null; }
+        return tileLayers.get(layerName).getTile(col, row);
     }
 
     /**
@@ -107,25 +124,46 @@ public class TileMap {
      * @param y The y coordinate of the tile
      * @return  The tile object at the location
      */
-    public Tile getTileAtLocation(int x, int y) { 
+    public ArrayList<Tile> getTilesAtLocation(int x, int y) { 
         if (x < 0 || y < tilemapOffsetY) { return null; }
-        return getTile(pixelsToTiles(x), pixelsToTiles(y)); 
+        return getTiles(pixelsToTiles(x), pixelsToTiles(y)); 
     }
 
     /**
-     * Sets the tile at the specified location (in tiles)
+     * Lazy initializer for the player.
      * 
-     * @param x    col number of the tile
-     * @param y    row number of the tile
-     * @param tile The tile object to place at the location
+     * @param player The player object
      */
-    public void setTile(int x, int y, Tile tile) {
-        int xPos = tilesToPixels(x);
-        int yPos = tilesToPixels(y);
-        tile.setPosition(xPos, yPos);
-        tiles[x][y] = tile;
-        System.out.println("[TILEMAP] New tile at (" + xPos + "," + yPos + ")");
+    public void setPlayer(Player player) {
+        player.setPosition(GamePanel.TILE_SIZE * 4, tilemapOffsetY);
+        player.setTileMap(this);
+        this.player = player;
+        System.out.println("[TILEMAP] Player spawned at " + player.getX() + ", " + player.getY());
     }
+
+    /**
+     * Lazy initializer for the background manager.
+     * 
+     * @param bgManager The background manager object
+     */
+    public void setBackgroundManager(BackgroundManager bgManager) {
+        this.bgManager = bgManager;
+    }
+
+    /**
+     * Set up all the enities particular to this tile map (e.g. enemies, etc.)
+     */
+    private void setupEntities() {
+        return;
+    }
+
+    /**
+     * Adds a new tile layer with the specified name
+     * 
+     * @param name  The name of the tile layer
+     * @param layer The tile layer object
+     */
+    public void addTileLayer(String name, TileLayer layer) { tileLayers.put(name, layer); }
 
     /**
      * Class method to convert a pixel position to a tile position.
@@ -156,14 +194,35 @@ public class TileMap {
      * 
      * @param x The x coordinate to check
      * @param y The y coordinate to check
-     * @return  Location of colliding tile. Null if no tile is at the location or if the location is out of bounds.
+     * @return  Location of colliding tile. Null if no tile is at the location or if the location 
+     *          is out of bounds.
      */
-    public Point collidesWithTile(int x, int y) {
-        int offsetY = getTileMapOffsetY();
-        int xTile = TileMap.pixelsToTiles(x - getTileMapOffsetX());
-        int yTile = TileMap.pixelsToTiles(y - offsetY);
-        if (getTile(xTile, yTile) == null) { return null; }
-        return getTile(xTile, yTile).getPosition();
+    public Point collidesWithTileCoords(int x, int y) {
+        System.out.println("Checking " + x + ", " + y);
+        ArrayList<Tile> tiles = getTilesAtLocation(
+            x - getTileMapOffsetX(), 
+            y - getTileMapOffsetY()
+        );
+        if (tiles == null || tiles.size() == 0) { return null; }
+        for (Tile t : tiles) {
+            if (t != null && t.isSolid()) { return t.getPosition(); } 
+        }
+        return null;
+    }
+
+    /**
+     * Checks if the specified row and column collide with a tile.
+     * 
+     * @param row The row to check
+     * @param col The column to check
+     * @return    Location of colliding tile. Null if no tile is at the location or if the location 
+     *            is out of bounds.
+     */
+    public Point collidesWithTile(int row, int col) {
+        ArrayList<Tile> tiles = getTiles(row, col);
+        if (tiles == null || tiles.size() == 0) { return null; }
+        for (Tile t : tiles) { if (t != null && t.isSolid()) { return t.getPosition(); } }
+        return null;
     }
 
     public Point collidesWithTileDown(Entity e, int x, int y) {
@@ -175,8 +234,8 @@ public class TileMap {
         for (int yTile = yTileFrom; yTile <= yTileTo; yTile++) {
             for (int xTile = xTileFrom; xTile <= xTileTo; xTile++) {
                 System.out.println ("[TILEMAP] Checking tile below (" + xTile + ", " + yTile + ")");
-                Tile tile = getTile(xTile, yTile);
-                if (tile != null && tile.isSolid()) { return tile.getPosition(); }
+                Point loc = collidesWithTile(xTile, yTile);
+                if (loc != null) { return loc; }
             }
         }
     
@@ -191,48 +250,80 @@ public class TileMap {
         int yTileTo = TileMap.pixelsToTiles(y - offsetY);
         
         for (int yTile = yTileFrom; yTile >= yTileTo; yTile--) {
-            if (getTile(xTile, yTile) != null) {
-                return new Point (xTile, yTile);
-            }
+            ArrayList<Tile> tiles = getTiles(xTile, yTile);
+            if (tiles == null || tiles.size() == 0) { continue; }
+            for (Tile t : tiles) { if (t.isSolid()) { return t.getPosition(); } }
             
-            if (getTile(xTile + 1, yTile) != null) {
+            tiles = getTiles(xTile + 1, yTile);
+            if (tiles.size() > 0) {
                 int leftSide = (xTile + 1) * GamePanel.TILE_SIZE;
                 if (x + e.getWidth() > leftSide) {
-                    return new Point (xTile + 1, yTile);
+                    for (Tile t : tiles) { if (t.isSolid()) { return t.getPosition(); } }
                 }
-            }    
+            }
         }
 
         return null;
     }
  
     /**
-     * Draws the tile map scene to the screen.
+     * Draws the tile map scene to the screen. The BackgroundManager draws its background
+     * layers first, then the tile layers and finally the entities.
      * 
      * @param g2 The graphics context to draw to
      */
     public void draw(Graphics2D g2) {
-        int offsetX = getTileMapOffsetX();
-        
-	    // draw the background first
-	    bgManager.draw(g2);
+        bgManager.draw(g2);
         
         // draw the visible tiles
-        Tile tile;
-        int firstTileX = pixelsToTiles(-offsetX );
+        int firstTileX = pixelsToTiles(-getTileMapOffsetX());
         int lastTileX = firstTileX + pixelsToTiles(screenSize.width) + 1;
-        for (int y = 0; y < mapSize.height; y++) {
-            for (int x = firstTileX; x <= lastTileX; x++) {
-                if ((tile = getTile(x, y)) == null) continue;
-                tile.draw(g2, tile.getX() + offsetX, tile.getY() + tilemapOffsetY);
-            }
+        int firstTileY = pixelsToTiles(-getTileMapOffsetY());
+        int lastTileY = firstTileY + pixelsToTiles(screenSize.height) + 1;
+        TileLayer terrain = getLayer("Terrain");
+        TileLayer decoration1 = getLayer("Decoration 1");
+        TileLayer decoration2 = getLayer("Decoration 2");
+        TileLayer entity = getLayer("Entity");
+
+        // draw terrain layer
+        if (terrain == null) {
+            throw new RuntimeException("Terrain layer not found");
+        }
+        renderTileLayer(g2, terrain, firstTileX, lastTileX, firstTileY, lastTileY);
+        
+        // draw decoration layers
+        if (decoration1 != null) { 
+            renderTileLayer(g2, decoration1, firstTileX, lastTileX, firstTileY, lastTileY); 
+        }
+        if (decoration2 != null) { 
+            renderTileLayer(g2, decoration2, firstTileX, lastTileX, firstTileY, lastTileY); 
+        }
+
+        // draw entities
+        if (entity != null) { 
+            renderTileLayer(g2, entity, firstTileX, lastTileX, firstTileY, lastTileY); 
         }
 
         // draw player
-        player.draw(g2, player.getX(), player.getY());
+        int x = player.getX() + getTileMapOffsetX();
+        int y = player.getY() + getTileMapOffsetY();
+        player.draw(g2, x, y);
+    }
+
+    private void renderTileLayer(Graphics2D g2d, TileLayer layer, int x1, int x2, int y1, int y2) {
+        Tile t;
+        for (int y = y1; y < y2; y++) {
+            for (int x = x1; x <= x2; x++) {
+                if ((t = layer.getTile(x, y)) == null) { continue; }
+                int xPos = x * GamePanel.TILE_SIZE + getTileMapOffsetX();
+                int yPos = y * GamePanel.TILE_SIZE + getTileMapOffsetY();
+                t.draw(g2d, xPos, yPos);
+            }
+        }
     }
 
     public void update() {
+        player.update();
         for (Entity e : entities) { 
             if (e instanceof MovingEntity) { ((MovingEntity) e).update(); }
         }
@@ -240,10 +331,10 @@ public class TileMap {
 
     public void moveLeft() {
         player.move(Movement.LEFT);
-        Point tilePos = collidesWithTile(player.getX(), player.getY());
-        if (tilePos == null) {
+        Point tilePos = collidesWithTileCoords(player.getX(), player.getY());
+        if (tilePos == null) { 
             bgManager.moveLeft();
-            return;
+            return; 
         }
         System.out.println ("[TILEMAP] Collision going left");
         player.setX((int)tilePos.getX() + getTileMapOffsetX() + player.getWidth());
@@ -251,10 +342,10 @@ public class TileMap {
     
     public void moveRight() {
         player.move(Movement.RIGHT);
-        Point tilePos = collidesWithTile(player.getX() + player.getWidth(), player.getY());
+        Point tilePos = collidesWithTileCoords(player.getX() + player.getWidth(), player.getY());
         if (tilePos == null) { 
             bgManager.moveRight();
-            return;
+            return; 
         }
         System.out.println ("[TILEMAP] Collision going right");
         player.setX((int) tilePos.getX() + getTileMapOffsetX() - player.getWidth());

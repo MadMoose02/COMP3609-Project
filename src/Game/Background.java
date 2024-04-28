@@ -1,8 +1,8 @@
 package Game;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.JPanel;
-import Managers.ImageManager;
 
 public class Background {
   	private Image bgImage;
@@ -13,11 +13,10 @@ public class Background {
 	private int bgDX;
     
 
-	public Background(JPanel panel, String imageFile, int bgDX) {
-        this.bgImage = ImageManager.getImage(imageFile);
+	public Background(JPanel panel, Image img, int bgDX) {
+        this.bgImage = img;
         bgImageWidth = bgImage.getWidth(null);
         this.bgDX = bgDX;
-        System.out.println ("[BACKGROUND] Loaded background image: " + imageFile);
   	}
 
 

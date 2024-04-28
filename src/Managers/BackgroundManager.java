@@ -1,6 +1,10 @@
 package Managers;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import Game.Background;
@@ -18,39 +22,29 @@ import Game.Background;
  */
 public class BackgroundManager {
 
-	private String bgImages[] = {
-        "layer_08",
-        "layer_07",
-        "layer_06",
-        "layer_05",
-        "layer_04",
-        "layer_03",
-        "layer_02",
-        "layer_01"
-    };
+  	private ArrayList<Background> backgrounds;
+    private JPanel panel;
 
-    // pixel amounts to move each background left or right
-    // a move amount of 0 makes a background stationary
-  	private int moveAmount[] = {1, 2, 3, 4, 4, 4, 5, 10};
+  	public BackgroundManager(JPanel panel) {
+        backgrounds = new ArrayList<>();
+        this.panel = panel;
+  	}
 
-  	private Background[] backgrounds;
-  	private int numBackgrounds;
+    public int getBackgroundCount() { return backgrounds.size(); }
 
-  	public BackgroundManager(JPanel panel, int moveSize) {
-        numBackgrounds = bgImages.length;
-        backgrounds = new Background[numBackgrounds];
-        for (int i = 0; i < numBackgrounds; i++) {
-            backgrounds[i] = new Background(panel, "layers_" + bgImages[i], moveAmount[i]);
-        }
-        System.out.println ("[BACKGROUND MANAGER] Loaded " + numBackgrounds + " backgrounds");
-  	} 
+    public void addBackground(Image image, int moveSize) { 
+        backgrounds.add(new Background(panel, image, moveSize));
 
-  	public void moveRight() { 
-		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].moveRight(); }
+    }
+
+  	public void moveRight() {
+        if (backgrounds == null || backgrounds.size() == 0) { return; }
+		for (Background bg: backgrounds) { bg.moveRight(); }
   	}
 
   	public void moveLeft() {
-		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].moveLeft(); }
+        if (backgrounds == null || backgrounds.size() == 0) { return; }
+		for (Background bg: backgrounds) { bg.moveLeft(); }
   	}
 
   	/**
@@ -59,9 +53,11 @@ public class BackgroundManager {
      * 
      * @param g2 Graphics context to draw on
      */
-
-  	public void draw (Graphics2D g2) { 
-		for (int i=0; i < numBackgrounds; i++) { backgrounds[i].draw(g2); }
+  	public void draw (Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, panel.getWidth(), panel.getHeight());
+        if (backgrounds == null || backgrounds.size() == 0) { return; }
+		for (Background bg: backgrounds) { bg.draw(g2); }
   	}
 
 }

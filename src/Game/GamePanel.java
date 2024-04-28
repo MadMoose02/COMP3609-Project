@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import Tile.*;
 import Entity.*;
@@ -29,7 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player;
 	private TileMapManager tileManager;
-	private TileMap	tileMap;
+	private ArrayList<TileMap> tileMaps;
+    private TileMap tileMap;
 
     private Movement lastMovement;
 	private boolean levelChange;
@@ -42,13 +44,14 @@ public class GamePanel extends JPanel implements Runnable {
         SaveDataManager.getInstance();
 		isRunning = isPaused = false;
 		image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
-		level = 1;
+        tileManager = new TileMapManager(this);
+		level = 0;
 		levelChange = false;
 	}
 
 
 	public void createGameEntities() {
-        tileManager = new TileMapManager(this);
+        player = new Player();
 	}
 
 
@@ -71,30 +74,24 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	public void gameUpdate() {
-
 		tileMap.update();
 
 		if (levelChange) {
 			levelChange = false;
+            createGameEntities();
 
 			try {
-				String filename = "map" + level + ".txt";
-				tileMap = tileManager.loadMap(filename) ;
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
+				tileMap = tileMaps.get(level);
+                tileMap.setPlayer(player);
 				System.out.println ("[GAMEPANEL] Changing level to Level " + level);
-				System.out.println ("[GAMEPANEL] Width of tilemap " + w);
-				System.out.println ("[GAMEPANEL] Height of tilemap " + h);
 			
-            } catch (Exception e) {		// no more maps: terminate game
+            } catch (Exception e) {
 				gameOver = true;
 				System.out.println(e);
 				System.out.println("[GAMEPANEL] Game Over"); 
 				return;
 			}
 
-			createGameEntities();
 			return;
 		}
 	}
@@ -123,12 +120,13 @@ public class GamePanel extends JPanel implements Runnable {
 			endGame();
 			gameOver = false;
 			level = 1;
+            System.out.println("[GAMEPANEL] Starting new game");
 
 			try {
                 createGameEntities();
-				tileMap = tileManager.loadMap("map1.txt");
-				System.out.println ("[GAMEPANEL] Tilemap Size: " + 
-                    tileMap.getWidth() + " x " + tileMap.getHeight());
+				tileMaps = tileManager.loadTileMaps();
+                tileMap = tileMaps.get(0);
+                tileMap.setPlayer(player);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
