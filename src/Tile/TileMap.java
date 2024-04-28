@@ -275,7 +275,7 @@ public class TileMap {
     public void draw(Graphics2D g2) {
         bgManager.draw(g2);
         
-        // draw all visible tiles, starting with terrain layer, then decoration, then entities
+        // draw the visible tiles
         int firstTileX = pixelsToTiles(-getTileMapOffsetX());
         int lastTileX = firstTileX + pixelsToTiles(screenSize.width) + 1;
         int firstTileY = pixelsToTiles(-getTileMapOffsetY());
@@ -349,6 +349,7 @@ public class TileMap {
         }
         System.out.println ("[TILEMAP] Collision going right");
         player.setX((int) tilePos.getX() + getTileMapOffsetX() - player.getWidth());
+        
     }
 
     public void jump() {
