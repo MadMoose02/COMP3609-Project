@@ -135,7 +135,7 @@ public class TMXReader {
                 Image image = ImageManager.loadImage(folderPath + File.separator + imagePath);
                 tileSet.put(firstGid, new Tile(
                     image.getScaledInstance(GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, Image.SCALE_SMOOTH), 
-                    false
+                    getTileName(imagePath), false
                 ));
             }
 
@@ -167,7 +167,7 @@ public class TMXReader {
             Image image = ImageManager.loadImage(folderPath + File.separator + imagePath);
             tile = new Tile(
                 image.getScaledInstance(GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, Image.SCALE_SMOOTH), 
-                false
+                getTileName(imagePath), false
             );
             
         } catch (Exception e) { e.printStackTrace(); }
@@ -216,6 +216,7 @@ public class TMXReader {
                 if (tileIDs[y][x] == 0) { continue; }
                 Tile newTile = tileSet.get(tileIDs[y][x]).clone();
                 if (layerName.equals("Terrain")) { newTile.setIsSolid(true); }
+                newTile.setPosition(x * GamePanel.TILE_SIZE, y * GamePanel.TILE_SIZE);
                 layer.setTile(x, y, newTile);
             }
         }
@@ -247,4 +248,7 @@ public class TMXReader {
         return bgManager;
     }
 
+    private String getTileName(String imagePath) {
+        return imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf(".")).toLowerCase();
+    }
 }

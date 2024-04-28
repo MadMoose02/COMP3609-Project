@@ -11,7 +11,16 @@ public abstract class MovingEntity extends Entity {
         super(x, y, width, height);
     }
 
+    /**
+     * Updates the current entity's internal state
+     */
     public abstract void update();
     
+    /**
+     * Moves the current entity in the specified direction
+     * 
+     * @param direction the direction to move the entity
+     * @see Movement
+     */
     public abstract void move(Movement direction);
 }
