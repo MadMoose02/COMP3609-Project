@@ -5,6 +5,7 @@ package Entity;
  */
 
 import java.awt.Image;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Color;
@@ -270,7 +271,7 @@ public class Player extends MovingEntity {
 
         // if there is a solid tile under the player, stop climbing down
         if (isClimbingDown()) {
-            Tile solidTile = tileMap.collidesWithTileCoords(getX() + getWidth() / 2, getY() + getHeight());
+            Point solidTile = tileMap.collidesWithTileCoords(getX() + getWidth() / 2, getY() + getHeight());
             if (solidTile != null) {
                 climbingDown = false;
                 setY(solidTile.getY() - getHeight());
