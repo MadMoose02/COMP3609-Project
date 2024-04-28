@@ -216,6 +216,7 @@ public class TMXReader {
                 if (tileIDs[y][x] == 0) { continue; }
                 Tile newTile = tileSet.get(tileIDs[y][x]).clone();
                 if (layerName.equals("Terrain")) { newTile.setIsSolid(true); }
+                newTile.setPosition(x * GamePanel.TILE_SIZE, y * GamePanel.TILE_SIZE);
                 layer.setTile(x, y, newTile);
             }
         }
