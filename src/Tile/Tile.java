@@ -59,4 +59,9 @@ public class Tile {
     public void draw(Graphics2D g2d, int x, int y) {
         g2d.drawImage(image, x, y, image.getWidth(null), image.getHeight(null), null);
     }
+
+    @Override
+    public String toString() {
+        return "Tile{" + "name=" + name + ", loc=(" + position.x + "," + position.y + ")}";
+    }
 }
