@@ -168,7 +168,7 @@ public class TileMap {
                     Tile t = coinLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new Coin(
-                        "coin.png",
+                        t.getName(),
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
@@ -177,7 +177,7 @@ public class TileMap {
                     Tile t = doorLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new Door(
-                        "door.png",
+                        t.getName(),
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
@@ -186,7 +186,7 @@ public class TileMap {
                     Tile t = dangerObjectLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new DangerObject(
-                        "dangerObject.png",
+                        t.getName(),
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
@@ -195,7 +195,7 @@ public class TileMap {
                     Tile t = invisibePotionLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new InvisiblePotion(
-                        "invisiblePotion.png",
+                        t.getName(),
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
@@ -204,7 +204,7 @@ public class TileMap {
                     Tile t = lifeLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new Life(
-                        "life.png",
+                        t.getName(),
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
@@ -213,7 +213,7 @@ public class TileMap {
                     Tile t = keyLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new Key(
-                        "key.png",
+                        t.getName(),
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
