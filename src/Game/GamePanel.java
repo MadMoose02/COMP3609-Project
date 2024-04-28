@@ -127,6 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
 				tileMaps = tileManager.loadTileMaps();
                 tileMap = tileMaps.get(0);
                 tileMap.setPlayer(player);
+                tileMap.setupEntities();
 			}
 			catch (Exception e) {
 				e.printStackTrace();
