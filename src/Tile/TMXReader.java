@@ -12,8 +12,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
 import Game.GamePanel;
+import Managers.BackgroundManager;
 import Managers.ImageManager;
 
+/**
+ * TMXReader.java <hr>
+ * Custom tile map reader based on the Tiled Map Editor's TMX format. This class reads in a TMX file
+ * and builds TileMap object with individual TileLayer objects.
+ */
 public class TMXReader {
 
     private String mapName;
@@ -21,10 +27,11 @@ public class TMXReader {
     private String tmxFilePath;
     private DocumentBuilderFactory dbFactory;
     private HashMap<Integer, Tile> tileSet;
+
     private int mapWidth, mapHeight;
     private TileMap tileMap;
     private GamePanel panel;
-    public static String MAP_FOLDER = System.getProperty("user.dir") + File.separator + 
+    public static final String MAP_FOLDER = System.getProperty("user.dir") + File.separator + 
         "assets" + File.separator + "maps";
 
     public TMXReader(GamePanel panel) {
@@ -83,11 +90,10 @@ public class TMXReader {
     }
 
     public void loadTMXTileMap(String mapName) throws Exception {
+        this.mapName = mapName;
+        this.folderPath = MAP_FOLDER + File.separator + mapName;
+        this.tmxFilePath = folderPath + File.separator + mapName + ".tmx";
         System.out.println("[TMX READER] Loading TMX Map: " + mapName);
-        if (this.folderPath == null || this.tmxFilePath == null) {
-            this.folderPath = MAP_FOLDER + File.separator + mapName;
-            this.tmxFilePath = folderPath + File.separator + mapName + ".tmx";
-        }
         try {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(tmxFilePath);
@@ -127,11 +133,17 @@ public class TMXReader {
                     }
                 }
                 Image image = ImageManager.loadImage(folderPath + File.separator + imagePath);
-                tileSet.put(firstGid, new Tile(image, true));
+                tileSet.put(firstGid, new Tile(
+                    image.getScaledInstance(GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, Image.SCALE_SMOOTH), 
+                    false
+                ));
             }
 
-            // Load tile data from <layer> elements
+            // Load all Tile layers from <layer> elements
             loadTileMapLayers(doc);
+
+            // Load background assets from Background folder inside map assets
+            tileMap.setBackgroundManager(loadBGManager());
 
         } catch (Exception e) { throw e; }
 
@@ -153,7 +165,10 @@ public class TMXReader {
             Element tilesetElement = (Element) tilesetList.item(0);
             String imagePath = tilesetElement.getAttribute("source");
             Image image = ImageManager.loadImage(folderPath + File.separator + imagePath);
-            tile = new Tile(image, true);
+            tile = new Tile(
+                image.getScaledInstance(GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, Image.SCALE_SMOOTH), 
+                false
+            );
             
         } catch (Exception e) { e.printStackTrace(); }
         
@@ -161,30 +176,23 @@ public class TMXReader {
     }
 
     private void loadTileMapLayers(Document doc) {
-        tileMap = new TileMap(panel, mapWidth, mapHeight);
+        tileMap = new TileMap(panel, null, null, mapWidth, mapHeight);
         NodeList layerList = doc.getElementsByTagName("layer");
         
-        // Loop through each layer in the TMX file
+        // Loop through each layer in the TMX file and build each TileLayer
         for (int i = 0; i < layerList.getLength(); i++) {
-            System.out.println("[TMX READER] Loading layer: " + layerList.item(i).getAttributes().
-                getNamedItem("name").getNodeValue());
             Element layerElement = (Element) layerList.item(i);
+            String layerName = layerElement.getAttributes().getNamedItem("name").getNodeValue();
+            System.out.println("[TMX READER] Loading layer: " + layerName);
         
-            // Get the data element from the current layer
+            // Get the layout of the Tile for the current layer
             NodeList dataList = layerElement.getElementsByTagName("data");
             Element dataElement = (Element) dataList.item(0);
-
-            // Get the CSV data and split it into an array
             int[][] tileIDs = getTileIDsFromCSV(dataElement.getTextContent().strip());
             
-            // Arrange the tiles onto the map
-            for (int y = 0; y < mapHeight; y++) {
-                for (int x = 0; x < mapWidth; x++) {
-                    if (tileIDs[y][x] == 0) { continue; }
-                    System.out.println(" > " + tileIDs[y][x] + " @ " + x + ", " + y);
-                    tileMap.setTile(x, y, tileSet.get(tileIDs[y][x]));
-                }
-            }
+            // Arrange the Tiles onto the TileLayer
+            TileLayer layer = setupTileLayer(layerName, tileIDs);
+            tileMap.addTileLayer(layerName, layer);
         }
     }
 
@@ -201,12 +209,42 @@ public class TMXReader {
         return tileIDs;
     }
 
-
-    public static void main(String[] args) {
-        try {
-            GamePanel panel = new GamePanel();
-            TMXReader tmxReader = new TMXReader(panel);
-            tmxReader.loadTMXTileMap("ForestFrenzy");
-        } catch (Exception e) { e.printStackTrace(); }
+    private TileLayer setupTileLayer(String layerName, int[][] tileIDs) {
+        TileLayer layer = new TileLayer(mapWidth, mapHeight);
+        for (int y = 0; y < mapHeight; y++) {
+            for (int x = 0; x < mapWidth; x++) {
+                if (tileIDs[y][x] == 0) { continue; }
+                Tile newTile = tileSet.get(tileIDs[y][x]).clone();
+                if (layerName.equals("Terrain")) { newTile.setIsSolid(true); }
+                layer.setTile(x, y, newTile);
+            }
+        }
+        return layer;
     }
+
+    private BackgroundManager loadBGManager() {
+        BackgroundManager bgManager = new BackgroundManager(panel);
+        try {
+            String backgroundPath = folderPath + File.separator + "Assets" + 
+                File.separator + "Background";
+            System.out.println("[TMX READER] Loading background assets from: " + backgroundPath);
+            
+            File[] backgroundFiles = new File(backgroundPath).listFiles();
+            if (backgroundFiles == null) {
+                System.out.println("[TMX READER] No background assets found for '" + mapName + "'");
+                return bgManager;
+            }
+            int moveSize = backgroundFiles.length;
+            for (File file : backgroundFiles) {
+                Image image = ImageManager.loadImage(file.getPath());
+                bgManager.addBackground(image, moveSize);
+                moveSize--;
+            }
+
+        } catch (Exception e) { e.printStackTrace(); }
+        
+        System.out.println("[TMX READER] Loaded " + bgManager.getBackgroundCount() + " backgrounds");
+        return bgManager;
+    }
+
 }

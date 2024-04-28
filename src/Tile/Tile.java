@@ -29,6 +29,8 @@ public class Tile {
 
     public int getY() { return (int) position.getY(); }
 
+    public Tile clone() { return new Tile(image, isSolid); }
+
 
     /** Mutators */
 
@@ -37,6 +39,8 @@ public class Tile {
     public void setPosition(Point position) { this.position = position; }
 
     public void setPosition(int x, int y) { this.position = new Point(x, y); }
+
+    public void setIsSolid(boolean isSolid) { this.isSolid = isSolid; }
 
 
     /** Methods */

@@ -44,13 +44,14 @@ public class GamePanel extends JPanel implements Runnable {
         SaveDataManager.getInstance();
 		isRunning = isPaused = false;
 		image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
+        tileManager = new TileMapManager(this);
 		level = 0;
 		levelChange = false;
 	}
 
 
 	public void createGameEntities() {
-        tileManager = new TileMapManager(this);
+        player = new Player();
 	}
 
 
@@ -73,29 +74,24 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	public void gameUpdate() {
-
 		tileMap.update();
 
 		if (levelChange) {
 			levelChange = false;
+            createGameEntities();
 
 			try {
 				tileMap = tileMaps.get(level);
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
+                tileMap.setPlayer(player);
 				System.out.println ("[GAMEPANEL] Changing level to Level " + level);
-				System.out.println ("[GAMEPANEL] Width of tilemap " + w);
-				System.out.println ("[GAMEPANEL] Height of tilemap " + h);
 			
-            } catch (Exception e) {		// no more maps: terminate game
+            } catch (Exception e) {
 				gameOver = true;
 				System.out.println(e);
 				System.out.println("[GAMEPANEL] Game Over"); 
 				return;
 			}
 
-			createGameEntities();
 			return;
 		}
 	}
@@ -124,11 +120,13 @@ public class GamePanel extends JPanel implements Runnable {
 			endGame();
 			gameOver = false;
 			level = 1;
+            System.out.println("[GAMEPANEL] Starting new game");
 
 			try {
                 createGameEntities();
 				tileMaps = tileManager.loadTileMaps();
                 tileMap = tileMaps.get(0);
+                tileMap.setPlayer(player);
 			}
 			catch (Exception e) {
 				e.printStackTrace();

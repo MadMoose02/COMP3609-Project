@@ -30,8 +30,8 @@ public class Heart extends Entity {
 
 
     @Override
-	public void draw (Graphics2D g2) {
-		g2.drawImage(spriteImage, getX(), getY(), getWidth(), getHeight(), null);
+	public void draw (Graphics2D g2, int x, int y) {
+		g2.drawImage(spriteImage, x, y, getWidth(), getHeight(), null);
 	}
 
 
