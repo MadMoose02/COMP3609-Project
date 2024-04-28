@@ -173,7 +173,7 @@ public class TileMap {
                         t.getY(), 1, 1, player));}
                 }
 
-                if (doorLayer == null) { 
+                if (doorLayer != null) { 
                     Tile t = doorLayer.getTile(x, y);
                     if (t == null) { continue; }
                     else {entities.add(new Door(
