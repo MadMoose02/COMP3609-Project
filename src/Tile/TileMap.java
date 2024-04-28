@@ -167,10 +167,7 @@ public class TileMap {
                 if (coinLayer != null){
                     Tile t = coinLayer.getTile(x, y);
                     if (t == null) { continue; }
-                    else {entities.add(new Coin(
-                        t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
+                    else {entities.add(new Coin(t.getX(), t.getY(), player));}
                 }
 
                 if (doorLayer != null) { 
