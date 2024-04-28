@@ -153,7 +153,71 @@ public class TileMap {
     /**
      * Set up all the enities particular to this tile map (e.g. enemies, etc.)
      */
-    private void setupEntities() {
+    public void setupEntities() {
+        TileLayer coinLayer = tileLayers.get("Coin");
+        TileLayer enemyLayer = tileLayers.get("Enemy");
+        TileLayer doorLayer = tileLayers.get("Door");
+        TileLayer dangerObjectLayer = tileLayers.get("DangerObject");
+        TileLayer invisibePotionLayer = tileLayers.get("InvisiblePotion");
+        TileLayer lifeLayer = tileLayers.get("Life");
+        TileLayer keyLayer = tileLayers.get("Key");
+        TileLayer ladderLayer = tileLayers.get("Ladder");
+
+        for (int y = 0; y < mapSize.height; y++) {
+            for (int x = 0; x < mapSize.width; x++) {
+                Tile t = coinLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new Coin(
+                    "coin.png",
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+
+                t = doorLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new Door(
+                    "door.png",
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+
+                t = dangerObjectLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new DangerObject(
+                    "dangerObject.png",
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+
+                t = invisibePotionLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new InvisiblePotion(
+                    "invisiblePotion.png",
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+
+                t = lifeLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new Life(
+                    "life.png",
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+
+                t = keyLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new Key(
+                    "key.png",
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+
+                t = ladderLayer.getTile(x, y);
+                if (t == null) { continue; }
+                else {entities.add(new Ladder(
+                    t.getX(), 
+                    t.getY(), 1, 1, player));}
+                
+            }
+
+        }
+
+
         return;
     }
 
