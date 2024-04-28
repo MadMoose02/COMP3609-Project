@@ -153,7 +153,6 @@ public class TileMap {
      */
     public void setupEntities() {
         TileLayer coinLayer = tileLayers.get("Coin");
-        TileLayer enemyLayer = tileLayers.get("Enemy");
         TileLayer doorLayer = tileLayers.get("Door");
         TileLayer dangerObjectLayer = tileLayers.get("DangerObject");
         TileLayer invisibePotionLayer = tileLayers.get("InvisiblePotion");
