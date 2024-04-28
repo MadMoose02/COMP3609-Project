@@ -158,7 +158,6 @@ public class TileMap {
         TileLayer invisibePotionLayer = tileLayers.get("InvisiblePotion");
         TileLayer lifeLayer = tileLayers.get("Life");
         TileLayer keyLayer = tileLayers.get("Key");
-        TileLayer ladderLayer = tileLayers.get("Ladder");
 
         for (int y = 0; y < mapSize.height; y++) {
             for (int x = 0; x < mapSize.width; x++) {
@@ -209,14 +208,6 @@ public class TileMap {
                     if (t == null) { continue; }
                     else {entities.add(new Key(
                         t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
-                }
-
-                if (ladderLayer != null) {
-                    Tile t = ladderLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new Ladder(
                         t.getX(), 
                         t.getY(), 1, 1, player));}
                 }
