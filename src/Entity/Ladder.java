@@ -29,5 +29,13 @@ public class Ladder extends Entity{
         }
         return false;
 	}   
+
+    public boolean isAtLadderTop(Player player) {
+        return player.getY() <= getY();
+    }
+
+    public boolean isAtLadderBottom(Player player) {
+        return player.getY() + player.getHeight() >= getY() + getHeight();
+    }
     
 }
