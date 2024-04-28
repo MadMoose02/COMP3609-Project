@@ -7,7 +7,6 @@ package Tile;
  */
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,15 +196,11 @@ public class TileMap {
      * @return  Location of colliding tile. Null if no tile is at the location or if the location 
      *          is out of bounds.
      */
-    public Point collidesWithTileCoords(int x, int y) {
-        System.out.println("Checking " + x + ", " + y);
-        ArrayList<Tile> tiles = getTilesAtLocation(
-            x - getTileMapOffsetX(), 
-            y - getTileMapOffsetY()
-        );
+    public Tile collidesWithTileCoords(int x, int y) {
+        ArrayList<Tile> tiles = getTilesAtLocation(x, y);
         if (tiles == null || tiles.size() == 0) { return null; }
         for (Tile t : tiles) {
-            if (t != null && t.isSolid()) { return t.getPosition(); } 
+            if (t != null && t.isSolid()) { return t; } 
         }
         return null;
     }
@@ -218,51 +213,38 @@ public class TileMap {
      * @return    Location of colliding tile. Null if no tile is at the location or if the location 
      *            is out of bounds.
      */
-    public Point collidesWithTile(int row, int col) {
+    public Tile collidesWithTile(int row, int col) {
         ArrayList<Tile> tiles = getTiles(row, col);
         if (tiles == null || tiles.size() == 0) { return null; }
-        for (Tile t : tiles) { if (t != null && t.isSolid()) { return t.getPosition(); } }
+        for (Tile t : tiles) { if (t != null && t.isSolid()) { return t; } }
         return null;
     }
 
-    public Point collidesWithTileDown(Entity e, int x, int y) {
-        int xTileFrom = TileMap.pixelsToTiles(e.getX());
-        int xTileTo = TileMap.pixelsToTiles(e.getX() + e.getWidth());
-        int yTileFrom = TileMap.pixelsToTiles(e.getY());
-        int yTileTo = TileMap.pixelsToTiles(e.getY() + e.getHeight());
-    
-        for (int yTile = yTileFrom; yTile <= yTileTo; yTile++) {
-            for (int xTile = xTileFrom; xTile <= xTileTo; xTile++) {
-                System.out.println ("[TILEMAP] Checking tile below (" + xTile + ", " + yTile + ")");
-                Point loc = collidesWithTile(xTile, yTile);
-                if (loc != null) { return loc; }
-            }
-        }
-    
+    public Tile collidesWithTileDown(int x, int y) {
+        ArrayList<Tile> tiles = getTilesAtLocation(x, y + 1);
+        if (tiles == null || tiles.size() == 0) { return null; }
+        for (Tile t : tiles) { if (t.isSolid()) { return t; } }
         return null;
     }
 
-    public Point collidesWithTileUp(Entity e, int x, int y) {
-        int offsetY = TileMap.pixelsToTiles(getTileMapOffsetY());
-        int offsetX = TileMap.pixelsToTiles(getTileMapOffsetX());
-        int xTile = TileMap.pixelsToTiles(x - offsetX);
-        int yTileFrom = TileMap.pixelsToTiles(e.getY() - offsetY);
-        int yTileTo = TileMap.pixelsToTiles(y - offsetY);
-        
-        for (int yTile = yTileFrom; yTile >= yTileTo; yTile--) {
-            ArrayList<Tile> tiles = getTiles(xTile, yTile);
-            if (tiles == null || tiles.size() == 0) { continue; }
-            for (Tile t : tiles) { if (t.isSolid()) { return t.getPosition(); } }
-            
-            tiles = getTiles(xTile + 1, yTile);
-            if (tiles.size() > 0) {
-                int leftSide = (xTile + 1) * GamePanel.TILE_SIZE;
-                if (x + e.getWidth() > leftSide) {
-                    for (Tile t : tiles) { if (t.isSolid()) { return t.getPosition(); } }
-                }
-            }
-        }
+    public Tile collidesWithTileDown(Entity e) {
+        ArrayList<Tile> tiles = getTilesAtLocation(e.getX(), e.getY() + e.getHeight() + 5);
+        if (tiles == null || tiles.size() == 0) { return null; }
+        for (Tile t : tiles) { if (t.isSolid()) { return t; } }
+        return null;   
+    }
 
+    public Tile collidesWithTileUp(int x, int y) {
+        ArrayList<Tile> tiles = getTilesAtLocation(x, y - 1);
+        if (tiles == null || tiles.size() == 0) { return null; }
+        for (Tile t : tiles) { if (t.isSolid()) { return t; } }
+        return null;
+    }
+
+    public Tile collidesWithTileUp(Entity e) {
+        ArrayList<Tile> tiles = getTilesAtLocation(e.getX(), e.getY() - e.getHeight()/2);
+        if (tiles == null || tiles.size() == 0) { return null; }
+        for (Tile t : tiles) { if (t.isSolid()) { return t; } }
         return null;
     }
  
@@ -275,15 +257,16 @@ public class TileMap {
     public void draw(Graphics2D g2) {
         bgManager.draw(g2);
         
-        // draw all visible tiles, starting with terrain layer, then decoration, then entities
+        // draw the visible tiles
         int firstTileX = pixelsToTiles(-getTileMapOffsetX());
-        int lastTileX = firstTileX + pixelsToTiles(screenSize.width) + 1;
+        int lastTileX = firstTileX + pixelsToTiles(screenSize.width);
         int firstTileY = pixelsToTiles(-getTileMapOffsetY());
         int lastTileY = firstTileY + pixelsToTiles(screenSize.height) + 1;
         TileLayer terrain = getLayer("Terrain");
         TileLayer decoration1 = getLayer("Decoration 1");
         TileLayer decoration2 = getLayer("Decoration 2");
         TileLayer entity = getLayer("Entity");
+        TileLayer ladder = getLayer("Ladder");
 
         // draw terrain layer
         if (terrain == null) {
@@ -297,6 +280,11 @@ public class TileMap {
         }
         if (decoration2 != null) { 
             renderTileLayer(g2, decoration2, firstTileX, lastTileX, firstTileY, lastTileY); 
+        }
+
+        // draw ladder layer
+        if (ladder != null) {
+            renderTileLayer(g2, ladder, firstTileX, lastTileX, firstTileY, lastTileY);
         }
 
         // draw entities
@@ -331,32 +319,33 @@ public class TileMap {
 
     public void moveLeft() {
         player.move(Movement.LEFT);
-        Point tilePos = collidesWithTileCoords(player.getX(), player.getY());
-        if (tilePos == null) { 
+        Tile tile = collidesWithTileCoords(player.getX(), player.getY());
+        if (tile == null) { 
             bgManager.moveLeft();
             return; 
         }
-        System.out.println ("[TILEMAP] Collision going left");
-        player.setX((int)tilePos.getX() + getTileMapOffsetX() + player.getWidth());
+        System.out.println ("[TILEMAP] Collision going left: " + tile);
+        player.setX((int) tile.getX() + player.getWidth());
     }
     
     public void moveRight() {
         player.move(Movement.RIGHT);
-        Point tilePos = collidesWithTileCoords(player.getX() + player.getWidth(), player.getY());
-        if (tilePos == null) { 
+        Tile tile = collidesWithTileCoords(player.getX() + player.getWidth(), player.getY());
+        if (tile == null) { 
             bgManager.moveRight();
             return; 
         }
-        System.out.println ("[TILEMAP] Collision going right");
-        player.setX((int) tilePos.getX() + getTileMapOffsetX() - player.getWidth());
+        System.out.println ("[TILEMAP] Collision going right: " + tile);
+        player.setX((int) tile.getX() - player.getWidth());
+        
     }
 
     public void jump() {
         player.move(Movement.JUMP);
-        Point tilePos = collidesWithTileUp(player, player.getX(), player.getY());
-        if (tilePos == null) { return; }
-        System.out.println ("[TILEMAP] Collision going up");
-        player.setY(((int) tilePos.getY()) * GamePanel.TILE_SIZE - player.getHeight());
+        Tile tile = collidesWithTileUp(player);
+        if (tile == null) { return; }
+        System.out.println ("[TILEMAP] Collision going up: " + tile);
+        player.setY(((int) tile.getY()) + GamePanel.TILE_SIZE + player.getHeight());
     }
 
     public void stand() {
