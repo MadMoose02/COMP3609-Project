@@ -5,11 +5,11 @@ import java.awt.Image;
 
 import Managers.ImageManager;
 
-public class DangerObjects extends Entity{
+public class DangerObject extends Entity{
     private Image spriteImage;
     private Player player;
 
-    public DangerObjects(String imgName, int x, int y, int width, int height, Player player) {
+    public DangerObject(String imgName, int x, int y, int width, int height, Player player) {
         super(x, y, width, height);
         this.player = player;   
 
