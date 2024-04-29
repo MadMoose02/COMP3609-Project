@@ -1,8 +1,5 @@
 package Managers;
 
-
-import java.util.ArrayList;
-
 import Game.GamePanel;
 import Tile.*;
 
@@ -24,21 +21,15 @@ public class TileMapManager {
     /* Methods */
 
 
-    public ArrayList<TileMap> loadTileMaps() {
-        String[] mapNames = {
-            "ForestFrenzy", "WinterWasteland", "GraveyardShift", "MysteryCastle"
-        };
+    public TileMap loadTileMap(String name) {
+        TileMap map = null;
+        try { 
+            tmxReader.loadTMXTileMap(name);
+            map = tmxReader.getTileMap();
 
-        ArrayList<TileMap> maps = new ArrayList<>();
-        for (String mapName : mapNames) {
-            try { 
-                tmxReader.loadTMXTileMap(mapName);
-                maps.add(tmxReader.getTileMap());
+        } catch (Exception e) { e.printStackTrace(); }
 
-            } catch (Exception e) { e.printStackTrace(); }
-        }
-
-        return maps;
+        return map;
     }
 
 }
