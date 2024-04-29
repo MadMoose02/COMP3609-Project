@@ -1,10 +1,12 @@
 package Entity;
 
+import Tile.Tile;
+
 public class InvisiblePotion extends Collectible{
     private int numPotions;
 
-    public InvisiblePotion(String imgName, int x, int y, int width, int height, Player player) {
-        super(imgName, x, y, width, height, player);
+    public InvisiblePotion(Tile tile, Player player) {
+        super("potion", tile.getX(), tile.getY(), 30, 30, player);
         this.numPotions = 0;
     }
 
@@ -21,4 +23,14 @@ public class InvisiblePotion extends Collectible{
         this.numPotions = 0;
     }
     
+    /**
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Potion{loc=(" + getX() + ", " + getY() +  "), dX=" + getDX() + ", dY=" + 
+            getDY() + ", dimensions=" + getWidth() + "x" + getHeight() + '}';
+    }
 }

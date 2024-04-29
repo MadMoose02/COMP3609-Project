@@ -85,13 +85,17 @@ public class GameWindow extends JFrame
 
 		gamePanel = new GamePanel();
         gamePanel.setPreferredSize(new Dimension(600, 500));
+		gamePanel.setBackground(Color.DARK_GRAY);
+
+		// create collectiblesPanel
 
 		// create infoPanel
 
 		JPanel infoPanel = new JPanel();
 		gridLayout = new GridLayout(3, 2);
 		infoPanel.setLayout(gridLayout);
-		infoPanel.setBackground(Color.ORANGE);
+		infoPanel.setBackground(Color.lightGray);
+		infoPanel.setPreferredSize(new Dimension(600, 75));
 
 		// add user interface objects to infoPanel
 	
@@ -107,7 +111,7 @@ public class GameWindow extends JFrame
 		
 		// create buttonPanel
 		JPanel buttonPanel = new JPanel();
-		gridLayout = new GridLayout(2, 3);
+		gridLayout = new GridLayout(1, 3);
 		buttonPanel.setLayout(gridLayout);
 
 		// add buttons to buttonPanel
@@ -119,7 +123,7 @@ public class GameWindow extends JFrame
 		mainPanel.add(infoPanel);
 		mainPanel.add(gamePanel);
 		mainPanel.add(buttonPanel);
-		mainPanel.setBackground(Color.PINK);
+		mainPanel.setBackground(Color.BLACK);
 
 		// set up mainPanel to respond to keyboard and mouse
 		gamePanel.addMouseListener(this);

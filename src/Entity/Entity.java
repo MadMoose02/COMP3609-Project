@@ -258,4 +258,15 @@ public abstract class Entity {
         if (this == entity) return false;
         return this.getBoundingRectangle().intersects(entity.getBoundingRectangle());
     }
+
+    /**
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Entity{loc=(" + getX() + ", " + getY() +  "), dX=" + getDX() + ", dY=" + 
+            getDY() + ", dimensions=" + getWidth() + "x" + getHeight() + '}';
+    }
 }
