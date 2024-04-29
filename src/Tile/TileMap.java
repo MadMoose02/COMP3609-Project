@@ -1,5 +1,7 @@
 package Tile;
 
+import java.awt.Color;
+
 /**
  * TileMap.java <hr>
  * The TileMap class contains the data for a tile-based map, including Sprites. 
@@ -8,6 +10,7 @@ package Tile;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,9 +26,11 @@ public class TileMap {
     private Dimension mapSize;
     private int tilemapOffsetY;
     private ArrayList<Entity> entities;
+    private GamePanel panel;
     private Player player;
 
     public TileMap(GamePanel panel, Player player, BackgroundManager bgManager, int width, int height) {
+        this.panel = panel;
         screenSize = new Dimension(panel.getSize().width, panel.getSize().height);
         mapSize = new Dimension(width, height);
         tilemapOffsetY = Math.max(0, screenSize.height - tilesToPixels(mapSize.height));
@@ -133,7 +138,7 @@ public class TileMap {
      * @param player The player object
      */
     public void setPlayer(Player player) {
-        player.setPosition(GamePanel.TILE_SIZE * 4, tilemapOffsetY);
+        player.setPosition(GamePanel.TILE_SIZE * 4, tilemapOffsetY + GamePanel.TILE_SIZE);
         player.setTileMap(this);
         this.player = player;
         System.out.println("[TILEMAP] Player spawned at " + player.getX() + ", " + player.getY());
@@ -154,8 +159,8 @@ public class TileMap {
     public void setupEntities() {
         TileLayer coinLayer = tileLayers.get("Coin");
         TileLayer doorLayer = tileLayers.get("Door");
-        TileLayer dangerObjectLayer = tileLayers.get("DangerObject");
         TileLayer invisibePotionLayer = tileLayers.get("InvisiblePotion");
+        TileLayer dangerObjectLayer = tileLayers.get("DangerObject");
         TileLayer lifeLayer = tileLayers.get("Life");
         TileLayer keyLayer = tileLayers.get("Key");
 
@@ -163,53 +168,34 @@ public class TileMap {
             for (int x = 0; x < mapSize.width; x++) {
                 if (coinLayer != null){
                     Tile t = coinLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new Coin(t.getX(), t.getY(), player));}
+                    if (t != null) { entities.add(new Coin(t, player)); }
                 }
 
                 if (doorLayer != null) { 
                     Tile t = doorLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new Door(
-                        t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
+                    if (t != null) { entities.add(new Door(t, player)); }
                 }
 
                 if (dangerObjectLayer!=null){
                     Tile t = dangerObjectLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new DangerObject(
-                        t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
+                    if (t != null) { 
+                        entities.add(new DangerObject(t, player));
+                    }
                 }
 
                 if (invisibePotionLayer != null){
                     Tile t = invisibePotionLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new InvisiblePotion(
-                        t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
+                    if (t != null) { entities.add(new InvisiblePotion(t, player)); }
                 }
 
                 if (lifeLayer != null){
                     Tile t = lifeLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new Life(
-                        t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
+                    if (t != null) { entities.add(new Life(t, player)); }
                 }
 
                 if (keyLayer != null){
                     Tile t = keyLayer.getTile(x, y);
-                    if (t == null) { continue; }
-                    else {entities.add(new Key(
-                        t.getName(),
-                        t.getX(), 
-                        t.getY(), 1, 1, player));}
+                    if (t != null) { entities.add(new Key(t, player)); }
                 }
             }
         }
@@ -325,7 +311,10 @@ public class TileMap {
         TileLayer terrain = getLayer("Terrain");
         TileLayer decoration1 = getLayer("Decoration 1");
         TileLayer decoration2 = getLayer("Decoration 2");
-        TileLayer entity = getLayer("Entity");
+        TileLayer dangerObject = getLayer("DangerObject");
+        TileLayer door = getLayer("Door");
+        TileLayer key = getLayer("Key");
+        TileLayer coin = getLayer("Coin");
         TileLayer ladder = getLayer("Ladder");
 
         // draw terrain layer
@@ -347,10 +336,41 @@ public class TileMap {
             renderTileLayer(g2, ladder, firstTileX, lastTileX, firstTileY, lastTileY);
         }
 
-        // draw entities
-        if (entity != null) { 
-            renderTileLayer(g2, entity, firstTileX, lastTileX, firstTileY, lastTileY); 
+        // draw door layer
+        if (door != null) {
+            renderTileLayer(g2, door, firstTileX, lastTileX, firstTileY, lastTileY);
         }
+
+        // draw key layer
+        if (key != null) {
+            renderTileLayer(g2, key, firstTileX, lastTileX, firstTileY, lastTileY);
+        }
+
+        // draw coin layer
+        if (coin != null) {
+            renderTileLayer(g2, coin, firstTileX, lastTileX, firstTileY, lastTileY);
+        }
+
+        // draw danger object layer
+        if (dangerObject != null) {
+            renderTileLayer(g2, dangerObject, firstTileX, lastTileX, firstTileY, lastTileY);
+        }
+
+        // draw collectibles to top right of screen
+        Image img = ImageManager.getImage("key");
+        g2.drawImage(img, screenSize.width - 50, 0, null);
+        g2.setColor(Color.WHITE);
+        g2.drawString("X " + player.getKeys(), screenSize.width - 20, 20);
+
+        img = ImageManager.getImage("coin");
+        g2.drawImage(img, screenSize.width - 50, 30, null);
+        g2.setColor(Color.WHITE);
+        g2.drawString("X " + player.getCoins(), screenSize.width - 20, 50);
+
+        img = ImageManager.getImage("heart");
+        g2.drawImage(img, screenSize.width - 52, 60, null);
+        g2.setColor(Color.WHITE);
+        g2.drawString("X " + player.getHealth(), screenSize.width - 20, 80);
 
         // draw player
         int x = player.getX() + getTileMapOffsetX();
@@ -372,8 +392,48 @@ public class TileMap {
 
     public void update() {
         player.update();
-        for (Entity e : entities) { 
+        if (player.getHealth() == 0) { panel.endGame(); }
+
+        for (Entity e : entities) {
             if (e instanceof MovingEntity) { ((MovingEntity) e).update(); }
+            if (e instanceof Door) {
+                Door door = (Door) e;
+                
+                // advance level if player collides with door
+                if (door.collidesWithPlayer()) {
+                    panel.endLevel();
+                    return;
+                }
+            }
+            if (e instanceof Key) {
+                Key key = (Key) e;
+
+                // collect key if player collides with key
+                if (key.collidesWithPlayer()) {
+                    key.collect();
+                    player.addKey();
+                    key.setVisible(false);
+                    return;
+                }
+            }
+            if (e instanceof Coin) {
+                Coin coin = (Coin) e;
+
+                // collect coin if player collides with coin
+                if (coin.collidesWithPlayer()) {
+                    coin.collect();
+                    player.addCoin();
+                    coin.setVisible(false);
+                    return;
+                }
+            }
+            if (e instanceof DangerObject) {
+                DangerObject dangerObject = (DangerObject) e;
+                if (dangerObject.collidesWithPlayer()) {
+                    if (player.getDamageCooldown() == 0) { player.takeDamage(); }
+                    return;
+                }
+            }
         }
     }
 
