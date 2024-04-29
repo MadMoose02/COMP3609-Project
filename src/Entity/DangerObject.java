@@ -3,18 +3,19 @@ package Entity;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-import Managers.ImageManager;
+import Game.GamePanel;
+import Tile.Tile;
 
 public class DangerObject extends Entity{
     private Image spriteImage;
     private Player player;
 
-    public DangerObject(String imgName, int x, int y, int width, int height, Player player) {
-        super(x, y, width, height);
+    public DangerObject(Tile tile, Player player) {
+        super(tile.getX(), tile.getY(), GamePanel.TILE_SIZE, GamePanel.TILE_SIZE);
         this.player = player;   
 
-        setImage(ImageManager.getImage(imgName));
-        setSize(40, 40);
+        setImage(tile.getImage());
+        setSize(GamePanel.TILE_SIZE);
     }
 
     @Override
@@ -23,11 +24,7 @@ public class DangerObject extends Entity{
     }
 
     public boolean collidesWithPlayer () {
-		if (this.collidesWith(player)) {
-            System.out.println("Collided with player");
-            return true;
-        }
-
+		if (this.collidesWith(player)) { return true; }
         return false;
 	}
     

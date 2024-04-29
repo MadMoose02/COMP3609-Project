@@ -1,15 +1,19 @@
 package Entity;
 
+import java.awt.Graphics2D;
+
 import Tile.Tile;
 
 public class Key extends Collectible{
     private int numKeys;
     private String keyName;
+    private boolean visible;
     
     public Key(Tile tile, Player player) {
         super("key", tile.getX(), tile.getY(), 30, 30, player);
         this.numKeys = 0;
         this.keyName = tile.getName();
+        this.visible = true;
     }
 
     @Override
@@ -27,6 +31,22 @@ public class Key extends Collectible{
 
     public String getKeyName() {
         return this.keyName;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    
+    @Override
+    public void draw(Graphics2D g2d, int x, int y) {
+        if (!visible) { return; }
+        super.draw(g2d, x, y);
+    }
+
+    @Override
+    public boolean collidesWithPlayer() {
+        if (!visible) { return false; }
+        return super.collidesWithPlayer();
     }
 
     /**

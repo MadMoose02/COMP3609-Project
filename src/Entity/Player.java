@@ -7,7 +7,6 @@ package Entity;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import Game.*;
@@ -46,6 +45,12 @@ public class Player extends MovingEntity {
     private int health;
     /** Player's maximum health */
     private int maxHealth;
+    /** Number of keys the player has */
+    private int keys;
+    /** Number of coins the player has */
+    private int coins;
+    /** Time until player can take damage again */
+    private long damageCooldown;
     /** Collection of all player animations */
     private HashMap<String, Animation> animations;
 
@@ -53,6 +58,8 @@ public class Player extends MovingEntity {
     public Player() {
         super(0, 0, 0, 0);
         tileMap = null;
+        damageCooldown = 0;
+        keys = coins = 0;
         health = maxHealth = 4;
         climbingUp = climbingDown = false;
         facingLeft = crouching = false;
@@ -80,6 +87,27 @@ public class Player extends MovingEntity {
      * @return the player's maximum health
      */
     public int getMaxHealth() { return maxHealth; }
+
+    /**
+     * Returns the number of keys the player has
+     * 
+     * @return the number of keys the player has
+     */
+    public int getKeys() { return keys; }
+
+    /**
+     * Returns the number of coins the player has
+     * 
+     * @return the number of coins the player has
+     */
+    public int getCoins() { return coins; }
+
+    /**
+     * Returns the time until the player can take damage again
+     * 
+     * @return the time until the player can take damage again
+     */
+    public long getDamageCooldown() { return damageCooldown; }
 
     /**
      * Checks if the player is currently in the process of crouching
@@ -193,6 +221,15 @@ public class Player extends MovingEntity {
      */
     public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
 
+    /**
+     * Adds a key to the player's inventory
+     * 
+     * @param key the key to add
+     */
+    public void addKey() { keys += 1; }
+
+    public void addCoin() { coins += 1; }
+
 
     /* Methods */
 
@@ -237,6 +274,8 @@ public class Player extends MovingEntity {
         if (getX() > tileMap.getWidthPixels() - getWidth()) {
             setX(tileMap.getWidthPixels() - getWidth());
         }
+
+        if (damageCooldown > 0) { damageCooldown--; }
 
         // Fix player clipping with ground
         ArrayList<Tile> collidedTiles = tileMap.getTilesAtLocation(getX() + getWidth() / 2, getY() + getHeight());
@@ -328,13 +367,6 @@ public class Player extends MovingEntity {
             img.getHeight(null), 
             null
         );
-
-        // draw player hitbox with coordinates
-        g2d.setColor(Color.RED);
-        g2d.drawString("(" + x + ", " + y + ")", x, y - 22);
-        g2d.setColor(Color.WHITE);
-        g2d.drawString("(" + getX() + ", " + getY() + ")", x, y - 10);
-        g2d.drawRect(x, y, getWidth(), getHeight());
     }
 
     private void loadPlayerAnimations() {
@@ -510,4 +542,8 @@ public class Player extends MovingEntity {
         doClimbAnimation();
     }
 
+    public void takeDamage() {
+        setHealth(getHealth() - 1);
+        damageCooldown = 2000;
+    }
 }
