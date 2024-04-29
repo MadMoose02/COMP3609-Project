@@ -18,6 +18,7 @@ public abstract class Collectible extends Entity{
 		
         setImage(ImageManager.getImage(imgName));
         setSize(40, 40);
+        setPosition(x, y);
     }
 
     @Override
@@ -45,4 +46,14 @@ public abstract class Collectible extends Entity{
     
     public abstract void collect();
     
+    /**
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Collectible{loc=(" + getX() + ", " + getY() +  "), dX=" + getDX() + ", dY=" + 
+            getDY() + ", dimensions=" + getWidth() + "x" + getHeight() + '}';
+    }
 }

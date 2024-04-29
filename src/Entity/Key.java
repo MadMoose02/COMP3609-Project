@@ -1,13 +1,15 @@
 package Entity;
 
+import Tile.Tile;
+
 public class Key extends Collectible{
     private int numKeys;
     private String keyName;
     
-    public Key(String imgName, int x, int y, int width, int height, Player player) {
-        super(imgName, x, y, width, height, player);
+    public Key(Tile tile, Player player) {
+        super("key", tile.getX(), tile.getY(), 30, 30, player);
         this.numKeys = 0;
-        this.keyName = imgName;
+        this.keyName = tile.getName();
     }
 
     @Override
@@ -26,5 +28,15 @@ public class Key extends Collectible{
     public String getKeyName() {
         return this.keyName;
     }
-    
+
+    /**
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Key{loc=(" + getX() + ", " + getY() +  "), dX=" + getDX() + ", dY=" + 
+            getDY() + ", dimensions=" + getWidth() + "x" + getHeight() + '}';
+    }
 }

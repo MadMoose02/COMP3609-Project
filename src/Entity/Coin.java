@@ -1,10 +1,12 @@
 package Entity;
 
+import Tile.Tile;
+
 public class Coin extends Collectible{
     private int numCoins;
 
-    public Coin(int x, int y, Player player) {
-        super("coin", x, y, 40, 40, player);
+    public Coin(Tile tile, Player player) {
+        super("coin", tile.getX(), tile.getY(), 40, 40, player);
         this.numCoins = 0;
     }
     
@@ -26,4 +28,14 @@ public class Coin extends Collectible{
         this.numCoins = 0;
     }
 
+    /**
+     * Returns a string representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Coin{loc=(" + getX() + ", " + getY() +  "), dX=" + getDX() + ", dY=" + 
+            getDY() + ", dimensions=" + getWidth() + "x" + getHeight() + '}';
+    }
 }
