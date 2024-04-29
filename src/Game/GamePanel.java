@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import Tile.*;
 import Entity.*;
@@ -30,13 +29,16 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player;
 	private TileMapManager tileManager;
-	private ArrayList<TileMap> tileMaps;
     private TileMap tileMap;
 
     private Movement lastMovement;
 	private boolean levelChange;
 	private int level;
 	private boolean gameOver;
+
+    private final String[] mapNames = {
+        "ForestFrenzy", "WinterWasteland", "GraveyardShift", "MysteryCastle"
+    };
 
 	public GamePanel () {
         ImageManager.getInstance();
@@ -81,8 +83,9 @@ public class GamePanel extends JPanel implements Runnable {
             createGameEntities();
 
 			try {
-				tileMap = tileMaps.get(level);
+				tileMap = tileManager.loadTileMap(mapNames[level]);
                 tileMap.setPlayer(player);
+                tileMap.setupEntities();
 				System.out.println ("[GAMEPANEL] Changing level to Level " + level);
 			
             } catch (Exception e) {
@@ -119,13 +122,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 			endGame();
 			gameOver = false;
-			level = 1;
+			level = 0;
             System.out.println("[GAMEPANEL] Starting new game");
 
 			try {
                 createGameEntities();
-				tileMaps = tileManager.loadTileMaps();
-                tileMap = tileMaps.get(0);
+				tileMap = tileManager.loadTileMap(mapNames[level]);
                 tileMap.setPlayer(player);
                 tileMap.setupEntities();
 			}
